@@ -35,8 +35,8 @@ V repozitáři jsou otisky každé anglické hodnoty, formátovací značky a od
 
 ## Distribuce
 
-Balíček vytvoří `python3 scripts/catalog.py package`. Obsahuje pouze složku `AAzerothAuctionator` a čtyři povolené soubory. Publikuj připravený ZIP, ne zdrojový archiv GitHubu. Alpha verze označ jako předběžné vydání a uveď neověřené kontroly.
+Balíček vytvoří `python3 scripts/catalog.py package`. Obsahuje pouze složku `AAzerothAuctionator` a osm povolených souborů: TOC, katalog Lua, fontový modul Lua, font TTF s licencí OFL, logo TGA, README a changelog. Publikuj připravený ZIP, ne zdrojový archiv GitHubu. Alpha verze označ jako předběžné vydání a uveď neověřené kontroly.
 
-Pro budoucí distribuci přes CurseForge založ samostatný projekt a v jeho vztazích uveď Auctionator jako požadovaný addon. **Nepřidávej `Dependencies: Auctionator` ani `OptionalDeps: Auctionator` do našeho TOC:** tyto direktivy by vynutily opačné pořadí načtení. Vydávání na CurseForge zatím není nakonfigurované.
+Projekt na CurseForge je [Azeroth česky: Auctionator](https://www.curseforge.com/wow/addons/azeroth-cesky-auctionator), ID `1728555`. Ve výchozích vztazích má Auctionator (`6124`) jako Required Dependency. Publikuj ověřený ZIP a označ pouze skutečně podporovanou variantu klienta. **Nepřidávej `Dependencies: Auctionator` ani `OptionalDeps: Auctionator` do našeho TOC:** tyto direktivy by vynutily opačné pořadí načtení. Automatické nahrávání na CurseForge zatím není nakonfigurované.
 
-Zásahy do rozhraní Auctionatoru, překlad dalších herních textů nebo integraci s hlavním Azeroth česky navrhuj odděleně. Tento modul používá pouze podporované lokalizační rozhraní.
+Překlad používá podporované lokalizační rozhraní. Fontový modul navíc řeší ověřené nedostatky českých glyfů ve vlastních oknech Auctionatoru; nesmí měnit sdílené herní fonty nebo funkce aukcí. Další zásahy do rozhraní, překlad herních textů a integraci s hlavním Azeroth česky navrhuj odděleně.

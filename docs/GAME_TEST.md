@@ -1,13 +1,42 @@
 # Ověření ve WoW: Forever
 
-Stav: **neprovedeno**. Izolované Lua testy neověřují herní loader, fonty ani rozložení. Pro první stabilní verzi vyplň výsledek, datum, build klienta a verze obou addonů.
+Stav: **první test alpha.2 odhalil chyby; úplné ověření oprav v 0.1.0 čeká**. Vydání 0.1.0 přebírá překlad i běhový kód alpha.6. Snímky od No898 z 5. 10. 2026 po místní instalaci do Forever 1.60.1 s Auctionatorem 340 potvrzují načtené české texty, ale také chybějící glyfy ř/ě/ň/č v popiscích a datech, překryv Nový seznam / Importovat a zkrácené dlouhé názvy filtrů a sloupců. Přesná zapnutá sada addonů a měřítko UI nejsou potvrzené.
+
+Alpha.3 přidala vlastní font s českými glyfy a zkrátila problematické popisky. Izolované Lua testy neověřují herní rasterizaci ani rozložení. Při ověření 0.1.0 vyplň výsledek, datum, build klienta a verze obou addonů; označení Release samo o sobě neznamená splnění tohoto checklistu.
+
+## Opakování nahlášených chyb v alpha.3
+
+- [ ] Po úplném restartu otevři nastavení a rozšířené hledání: ř, ě, ň, č se zobrazují správně.
+- [ ] Nový seznam, Import a Export se nepřekrývají; zkontroluj i najetí myší a vypnutá tlačítka.
+- [ ] Cena odkupu, Úr. použití, Úroveň předm. a Úr. předm. se vejdou do filtrů a sloupců.
+- [ ] V historii cen mají neděle / říjen / čtvrtek správné znaky i po posunu tabulky a novém hledání.
+- [ ] Font funguje i při zapnutém samotném Auctionatoru a českém modulu, bez hlavního Azeroth česky.
+- [ ] Nativní záložky a jiná okna hry mají původní fonty; po vypnutí modulu a `/reload` se vrátí i fonty Auctionatoru.
+
+## Název a logo v alpha.5
+
+No898 po nahlášení rozbitého `č` v názvu zvolil název bez diakritiky a původní font seznamu. Alpha.5 proto odstraňuje fontový zásah do seznamu z alpha.4 a zachovává původní logo hlavního addonu.
+
+- [ ] Po úplném restartu má položka název „Azeroth cesky: Auctionator“, logo hlavního Azeroth česky a stejný font jako ostatní položky — u výběru postavy i přes Esc → AddOns ve hře.
+- [ ] Posuň seznam mimo naši položku a zpět; název zůstává správný a fonty jiných addonů se nemění.
+- [ ] Zopakuj kontrolu bez hlavního Azeroth česky, pouze s Auctionatorem a českým modulem.
+- [ ] Změna stavu zapnutí a vyhledávání v seznamu fungují jako předtím; žádné nové Lua chyby.
+
+Název bez diakritiky nevyžaduje zásah do fontu seznamu.
+
+## Opravy z review v alpha.6
+
+- [ ] V Informacích jsou čínské znaky ve jménech překladatelů čitelné a nadpis Překladatelé má českou diakritiku.
+- [ ] Při otevřeném okně vytvoř a rozbal nákupní seznam s českými znaky; ověř nové řádky i po posouvání a přidání nedávného hledání.
+- [ ] Najeď na nastavení automatického hledání seznamu: česká nápověda má správné znaky a zalomení i při opakovaném zobrazení.
+- [ ] Po nápovědě nastavení otevři nápovědu předmětu a jiného addonu: mají původní font. Ověř také skrytí nápovědy při přechodu do boje a absenci Lua/taint chyb.
 
 ## Instalace a načtení
 
 - [ ] Nainstaluj instalační ZIP do klienta Forever 1.60.1, vedle Auctionatoru 340.
 - [ ] Ponech původní složku `AAzerothAuctionator`, vypni ostatní jazykové moduly Auctionatoru.
 - [ ] Nejprve spusť pouze Auctionator a český modul, bez hlavního Azeroth česky. Proveď úplný restart klienta.
-- [ ] V seznamu addonů je „Azeroth česky: Auctionator“, bez chybné verze nebo chybějící závislosti.
+- [ ] V seznamu addonů je „Azeroth cesky: Auctionator“, bez chybné verze nebo chybějící závislosti.
 - [ ] Po přihlášení jsou záložky Nákup, Prodej a Rušení aukcí česky už při prvním otevření.
 - [ ] `/reload` češtinu zachová. Vypnutí českého modulu a nové načtení obnoví jazyk klienta.
 - [ ] Překlad nic nemění v uložených cenách, seznamech, profilech ani aukcích.
