@@ -2,14 +2,14 @@
 
 Samostatný český překlad [Auctionatoru](https://www.curseforge.com/wow/addons/auctionator), spravovaný projektem [Azeroth česky](https://github.com/No898/azeroth-cesky).
 
-**Testovací verze `0.1.0-alpha.4` pro WoW: Forever 1.60.1 a Auctionator 340.** Přeloženo je všech **451 textů jeho lokalizačního katalogu**. Oprava obsahuje font s českými znaky a kratší popisky podle prvního testu ve hře. Seznam addonů otevřený přes Esc má opravu diakritiky našeho názvu; modul používá stejné logo jako hlavní Azeroth česky. Kontroly katalogu a izolované testy v Lua 5.1 jsou součástí projektu; vzhled opravy ještě vyžaduje opakované ověření ve hře.
+**Testovací verze `0.1.0-alpha.5` pro WoW: Forever 1.60.1 a Auctionator 340.** Přeloženo je všech **451 textů jeho lokalizačního katalogu**. Oprava obsahuje font s českými znaky a kratší popisky podle prvního testu ve hře. V seznamu addonů se modul jmenuje **Azeroth cesky: Auctionator**, používá původní herní font a stejné logo jako hlavní Azeroth česky. Kontroly katalogu a izolované testy v Lua 5.1 jsou součástí projektu; vzhled opravy ještě vyžaduje opakované ověření ve hře.
 
 ## Instalace
 
 1. Nainstaluj [Auctionator](https://www.curseforge.com/wow/addons/auctionator).
 2. Stáhni instalační balíček `AAzerothAuctionator-<verze>.zip` z příloh v [Releases](https://github.com/No898/azeroth-cesky-auctionator/releases). GitHub tlačítko **Code → Download ZIP** stahuje vývojové zdroje, nikoli instalační balíček.
 3. Při vypnuté hře rozbal složku `AAzerothAuctionator` do `Interface/AddOns` svého klienta WoW: Forever. Složku nepřejmenovávej.
-4. Ve výběru addonů zapni **Auctionator** i **Azeroth česky: Auctionator** a přihlas se do hry.
+4. Ve výběru addonů zapni **Auctionator** i **Azeroth cesky: Auctionator** a přihlas se do hry.
 
 Výsledná struktura:
 
@@ -20,7 +20,6 @@ Interface/AddOns/
     ├── AAzerothAuctionator.toc
     ├── Translations.lua
     ├── Fonts.lua
-    ├── AddonList.lua
     ├── Fonts/
     │   ├── GentiumBook-Regular.ttf
     │   └── OFL.txt
@@ -28,9 +27,9 @@ Interface/AddOns/
         └── AddonLogo.tga
 ```
 
-Čeština se použije automaticky. Hlavní addon **Azeroth česky není potřeba**. Pro návrat k jazyku herního klienta vypni pouze **Azeroth česky: Auctionator** a znovu načti rozhraní. Ostatní překladové moduly Auctionatoru nech vypnuté; sdílejí jeden přepis jazyka.
+Čeština se použije automaticky. Hlavní addon **Azeroth česky není potřeba**. Pro návrat k jazyku herního klienta vypni pouze **Azeroth cesky: Auctionator** a znovu načti rozhraní. Ostatní překladové moduly Auctionatoru nech vypnuté; sdílejí jeden přepis jazyka.
 
-Při aktualizaci nahraď celou složku a úplně restartuj klienta: přibyly Lua soubory, font a logo v metadatech. Rozhraní Auctionatoru a vlastní název v herním seznamu addonů používají přibalený Gentium Book se zachováním velikosti písma a barev. Sdílené herní fonty se nemění. Fontová oprava může běžet až po přihlášení do hry, nikoli v seznamu u výběru postavy.
+Při aktualizaci nahraď celou složku a úplně restartuj klienta, aby se načetla nová metadata a nezůstaly staré soubory. Rozhraní Auctionatoru používá přibalený Gentium Book se zachováním velikosti písma a barev. Seznam addonů a sdílené herní fonty se nemění; název bez diakritiky je čitelný i před přihlášením.
 
 ## Co se překládá
 

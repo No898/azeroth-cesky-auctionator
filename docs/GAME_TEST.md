@@ -13,23 +13,23 @@ Alpha.3 přidává vlastní font s českými glyfy a zkracuje problematické pop
 - [ ] Font funguje i při zapnutém samotném Auctionatoru a českém modulu, bez hlavního Azeroth česky.
 - [ ] Nativní záložky a jiná okna hry mají původní fonty; po vypnutí modulu a `/reload` se vrátí i fonty Auctionatoru.
 
-## Název a logo v alpha.4
+## Název a logo v alpha.5
 
-No898 doplnil snímek rozbitého `č` v názvu a potvrdil, že seznam otevřel přes Esc už ve hře. Alpha.4 proto rozšiřuje fontovou opravu pouze na vlastní řádek v tomto seznamu a přidává požadované původní logo.
+No898 po nahlášení rozbitého `č` v názvu zvolil název bez diakritiky a původní font seznamu. Alpha.5 proto odstraňuje fontový zásah do seznamu z alpha.4 a zachovává původní logo hlavního addonu.
 
-- [ ] Po úplném restartu a přihlášení otevři Esc → AddOns: naše položka má logo hlavního Azeroth česky a správné `č`.
+- [ ] Po úplném restartu má položka název „Azeroth cesky: Auctionator“, logo hlavního Azeroth česky a stejný font jako ostatní položky — u výběru postavy i přes Esc → AddOns ve hře.
 - [ ] Posuň seznam mimo naši položku a zpět; název zůstává správný a fonty jiných addonů se nemění.
 - [ ] Zopakuj kontrolu bez hlavního Azeroth česky, pouze s Auctionatorem a českým modulem.
 - [ ] Změna stavu zapnutí a vyhledávání v seznamu fungují jako předtím; žádné nové Lua chyby.
 
-Seznam před přihlášením používá font klienta; jeho diakritiku náš ještě nenačtený Lua modul nemůže opravit.
+Název bez diakritiky nevyžaduje zásah do fontu seznamu.
 
 ## Instalace a načtení
 
 - [ ] Nainstaluj instalační ZIP do klienta Forever 1.60.1, vedle Auctionatoru 340.
 - [ ] Ponech původní složku `AAzerothAuctionator`, vypni ostatní jazykové moduly Auctionatoru.
 - [ ] Nejprve spusť pouze Auctionator a český modul, bez hlavního Azeroth česky. Proveď úplný restart klienta.
-- [ ] V seznamu addonů je „Azeroth česky: Auctionator“, bez chybné verze nebo chybějící závislosti.
+- [ ] V seznamu addonů je „Azeroth cesky: Auctionator“, bez chybné verze nebo chybějící závislosti.
 - [ ] Po přihlášení jsou záložky Nákup, Prodej a Rušení aukcí česky už při prvním otevření.
 - [ ] `/reload` češtinu zachová. Vypnutí českého modulu a nové načtení obnoví jazyk klienta.
 - [ ] Překlad nic nemění v uložených cenách, seznamech, profilech ani aukcích.

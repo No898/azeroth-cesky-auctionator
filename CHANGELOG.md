@@ -1,5 +1,10 @@
 # Změny
 
+## 0.1.0-alpha.5 — 2026-10-05
+
+- Název v seznamu addonů je na přání autora „Azeroth cesky: Auctionator“, bez diakritiky a s původním herním fontem. Logo zůstává zachované.
+- Odstraněn modul měnící font vlastního řádku v seznamu addonů. Font s českými znaky se nadále používá uvnitř Auctionatoru.
+
 ## 0.1.0-alpha.4 — 2026-10-05
 
 - Stejné logo jako hlavní Azeroth česky, přibalené přímo v modulu a připojené přes `IconTexture` v TOC.

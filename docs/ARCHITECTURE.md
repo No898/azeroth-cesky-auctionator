@@ -31,9 +31,7 @@ Lua testy kontrolují rozsah zásahů, stavy tlačítek, pozdní vytvoření a p
 
 ### Vlastní položka v seznamu addonů
 
-Od `alpha.4` doplňuje `AddonList.lua` jedinou cílenou výjimku mimo okna Auctionatoru: font vlastního názvu v nativním seznamu otevřeném přes Esc. Identitu řádku ověřuje podle jeho indexu a názvu `AAzerothAuctionator` přes API klienta. Text názvu, ikonu, barvy a stav zapnutí ponechává klientovi. Při recyklaci řádku obnoví původní font, pokud ho mezitím nezměnil jiný addon. Neplatné indexy a protected/forbidden rámce vynechá, změny odloží za boje. Fontové objekty ostatních addonů se nepřepisují.
-
-Post-hook řádkového inicializátoru a obnovy seznamu doplňují `OnShow` a vlastní callback posouvání. Referencí pro názvy funkcí je [zdroj nativního AddonList](https://github.com/Gethe/wow-ui-source/blob/live/Interface/AddOns/Blizzard_AddOnList/AddonList.lua); dostupnost se kontroluje za běhu a starší seznam může využít samotný `AddonList_Update`. Protože addon Lua před vstupem do hry neběží, oprava fontu se nevztahuje na výběr postavy.
+Od `alpha.5` je název v TOC na přání autora `Azeroth cesky: Auctionator`, bez diakritiky. Seznam addonů tak používá stejný původní font jako ostatní položky a název je čitelný i před přihlášením. Dřívější `AddonList.lua` z alpha.4 byl odstraněn; modul do seznamu addonů nezasahuje. Český font zůstává omezený na vlastní okna Auctionatoru.
 
 Logo v `Textures/AddonLogo.tga` je nezměněná kopie loga hlavního Azeroth česky z místní instalace, převzatá na výslovné přání autora. SHA-256: `3560d56d094cdb2948bdeb3f53aecd140193c34283c28195e8bb43f72dd8d929`. TOC odkazuje na vlastní kopii přes `IconTexture`; hlavní addon není potřeba.
 

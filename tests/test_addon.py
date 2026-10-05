@@ -105,14 +105,13 @@ class CatalogueTests(unittest.TestCase):
             self.assertEqual(set(archive.namelist()), {
                 f"{catalog.ADDON}/{catalog.ADDON}.toc", f"{catalog.ADDON}/Translations.lua",
                 f"{catalog.ADDON}/Fonts.lua", f"{catalog.ADDON}/Fonts/GentiumBook-Regular.ttf",
-                f"{catalog.ADDON}/AddonList.lua",
                 f"{catalog.ADDON}/Fonts/OFL.txt",
                 f"{catalog.ADDON}/Textures/AddonLogo.tga",
                 f"{catalog.ADDON}/README.md", f"{catalog.ADDON}/CHANGELOG.md",
             })
             toc = archive.read(f"{catalog.ADDON}/{catalog.ADDON}.toc").decode()
             lua_files = [line for line in toc.splitlines() if line and not line.startswith("#")]
-            self.assertEqual(lua_files, ["Translations.lua", "Fonts.lua", "AddonList.lua"])
+            self.assertEqual(lua_files, ["Translations.lua", "Fonts.lua"])
             icon = toc.split("## IconTexture: ", 1)[1].splitlines()[0].replace("\\", "/")
             icon = icon.removeprefix("Interface/AddOns/")
             self.assertEqual(archive.read(icon), (ROOT / "addon" / icon).read_bytes())
