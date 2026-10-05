@@ -7,7 +7,7 @@ Samostatný český překlad [Auctionatoru](https://www.curseforge.com/wow/addon
 ## Instalace
 
 1. Nainstaluj [Auctionator](https://www.curseforge.com/wow/addons/auctionator).
-2. Stáhni instalační balíček `AAzerothAuctionator-<verze>.zip`, až bude přiložený v [Releases](https://github.com/No898/azeroth-cesky-auctionator/releases). GitHub tlačítko **Code → Download ZIP** stahuje vývojové zdroje, nikoli instalační balíček.
+2. Stáhni instalační balíček `AAzerothAuctionator-<verze>.zip` z příloh v [Releases](https://github.com/No898/azeroth-cesky-auctionator/releases). GitHub tlačítko **Code → Download ZIP** stahuje vývojové zdroje, nikoli instalační balíček.
 3. Při vypnuté hře rozbal složku `AAzerothAuctionator` do `Interface/AddOns` svého klienta WoW: Forever. Složku nepřejmenovávej.
 4. Ve výběru addonů zapni **Auctionator** i **Azeroth česky: Auctionator** a přihlas se do hry.
 
