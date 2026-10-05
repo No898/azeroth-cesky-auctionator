@@ -1,5 +1,6 @@
 -- Czech glyph support for Auctionator-owned frames only. Shared Blizzard font
--- objects and the auction house's native tabs are never modified.
+-- objects and the auction house's native tabs are never modified. Configuration
+-- tooltips temporarily use the same face and restore their original fonts.
 local fontPath = "Interface\\AddOns\\AAzerothAuctionator\\Fonts\\GentiumBook-Regular.ttf"
 local translation = AUCTIONATOR_LOCALES_OVERRIDE
 local watched = setmetatable({}, {__mode = "k"})
@@ -11,6 +12,9 @@ local scheduled = false
 local installed = false
 local Refresh
 local Schedule
+local tooltipFonts = setmetatable({}, {__mode = "k"})
+local hookedTooltip
+local refreshingTooltip = false
 
 local function CanChange(frame)
   return frame and not (frame.IsForbidden and frame:IsForbidden())
@@ -23,6 +27,64 @@ local function ApplyFont(region)
   if path and size and path ~= fontPath then
     region:SetFont(fontPath, size, flags)
   end
+end
+
+local function SameFont(first, second)
+  return first[1] == second[1] and first[2] == second[2] and first[3] == second[3]
+end
+
+local function RestoreTooltipFonts()
+  if not CanChange(hookedTooltip) then return end
+  for region, state in pairs(tooltipFonts) do
+    if CanChange(region) then
+      if SameFont({region:GetFont()}, state.applied) then
+        region:SetFont(unpack(state.original))
+      end
+      tooltipFonts[region] = nil
+    end
+  end
+end
+
+local function InstallTooltipFonts()
+  local tooltip = GameTooltip
+  if not CanChange(tooltip) or hookedTooltip == tooltip then return end
+  hookedTooltip = tooltip
+  -- Clean up even during combat: these regions are unprotected, and retaining
+  -- our font would otherwise leak it into the next owner's tooltip.
+  hooksecurefunc(tooltip, "SetOwner", RestoreTooltipFonts)
+  tooltip:HookScript("OnHide", RestoreTooltipFonts)
+  hooksecurefunc(tooltip, "Show", function()
+    if refreshingTooltip or not CanChange(tooltip) then return end
+    local owner = tooltip:GetOwner()
+    if InCombatLockdown() or not CanChange(owner)
+      or AUCTIONATOR_LOCALES_OVERRIDE ~= translation or not watched[owner]
+      or not (type(owner.tooltipText) == "string" or type(owner.tooltipTitleText) == "string"
+        or type(owner.TooltipText) == "string") then
+      RestoreTooltipFonts()
+      return
+    end
+    local changed = false
+    for _, region in ipairs({tooltip:GetRegions()}) do
+      if CanChange(region) and region.IsObjectType and region:IsObjectType("FontString") then
+        local original = {region:GetFont()}
+        if original[1] and original[2] and original[1] ~= fontPath then
+          ApplyFont(region)
+          local applied = {region:GetFont()}
+          if applied[1] == fontPath then
+            tooltipFonts[region] = {original = original, applied = applied}
+            changed = true
+          end
+        end
+      end
+    end
+    -- Reflow wrapped text after changing metrics. Show is also called for an
+    -- already-visible tooltip; OnShow alone would miss updates and new lines.
+    if changed then
+      refreshingTooltip = true
+      tooltip:Show()
+      refreshingTooltip = false
+    end
+  end)
 end
 
 -- Button state changes select their font objects again. Give each shared style
@@ -69,7 +131,9 @@ Refresh = function(frame, seen)
   if frame.IsObjectType and frame:IsObjectType("EditBox") then ApplyFont(frame) end
   if frame.GetRegions then
     for _, region in ipairs({frame:GetRegions()}) do
-      if region.IsObjectType and region:IsObjectType("FontString") then ApplyFont(region) end
+      -- Credits contain untranslated CJK names outside Gentium's glyph set.
+      if region ~= frame.TranslatorsText and region.IsObjectType
+        and region:IsObjectType("FontString") then ApplyFont(region) end
     end
   end
   if not watched[frame] and frame.HookScript then
@@ -77,7 +141,7 @@ Refresh = function(frame, seen)
     frame:HookScript("OnShow", function() Queue(frame) end)
     -- Result rows are pooled and may be created after opening the window or
     -- while scrolling. Observe this Auctionator listing's own scroll box.
-    local scrollBox = frame.ScrollArea and frame.ScrollArea.ScrollBox
+    local scrollBox = (frame.ScrollArea and frame.ScrollArea.ScrollBox) or frame.ScrollBox
     if scrollBox and scrollBox.RegisterCallback and ScrollBoxListMixin and ScrollBoxListMixin.Event then
       scrollBox:RegisterCallback(ScrollBoxListMixin.Event.OnDataRangeChanged,
         function() Queue(frame) end, watched[frame])
@@ -133,7 +197,9 @@ local function RequestDiscovery()
 end
 
 local function Install()
-  if installed or not Auctionator then return end
+  if not Auctionator then return end
+  InstallTooltipFonts()
+  if installed then return end
   installed = true
   -- These factories can create settings/dialog frames after login. Post-hooks
   -- only schedule font work; their return values and behavior stay intact.

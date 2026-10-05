@@ -1,5 +1,12 @@
 # Změny
 
+## 0.1.0-alpha.6 — 2026-10-05
+
+- Nepřekládaná jména překladatelů si ponechávají původní font, aby se neztratily čínské znaky. Český nadpis se nadále zobrazuje přibaleným fontem.
+- České znaky fungují také v nových řádcích nákupních seznamů a nedávných hledání bez nutnosti znovu otevřít okno.
+- Nápovědy nastavení dostávají český font dočasně. Po skrytí nebo změně vlastníka se původní font obnoví, aniž by přepsal pozdější změnu jiného addonu.
+- Regresní testy pokrývají tyto případy včetně skutečného tooltip mixinu Auctionatoru 340, opakovaného zobrazení a obnovy za boje. Vykreslení a spolupráce s ostatními addony čekají na kontrolu ve hře.
+
 ## 0.1.0-alpha.5 — 2026-10-05
 
 - Název v seznamu addonů je na přání autora „Azeroth cesky: Auctionator“, bez diakritiky a s původním herním fontem. Logo zůstává zachované.

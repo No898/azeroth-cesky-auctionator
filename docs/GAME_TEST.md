@@ -1,6 +1,6 @@
 # Ověření ve WoW: Forever
 
-Stav: **první test alpha.2 odhalil chyby; opakované ověření alpha.3 čeká**. Snímky od No898 z 5. 10. 2026 po místní instalaci do Forever 1.60.1 s Auctionatorem 340 potvrzují načtené české texty, ale také chybějící glyfy ř/ě/ň/č v popiscích a datech, překryv Nový seznam / Importovat a zkrácené dlouhé názvy filtrů a sloupců. Přesná zapnutá sada addonů a měřítko UI nejsou potvrzené.
+Stav: **první test alpha.2 odhalil chyby; úplné ověření aktuální alpha.6 čeká**. Snímky od No898 z 5. 10. 2026 po místní instalaci do Forever 1.60.1 s Auctionatorem 340 potvrzují načtené české texty, ale také chybějící glyfy ř/ě/ň/č v popiscích a datech, překryv Nový seznam / Importovat a zkrácené dlouhé názvy filtrů a sloupců. Přesná zapnutá sada addonů a měřítko UI nejsou potvrzené.
 
 Alpha.3 přidává vlastní font s českými glyfy a zkracuje problematické popisky. Izolované Lua testy neověřují herní rasterizaci ani rozložení. Pro první stabilní verzi vyplň výsledek, datum, build klienta a verze obou addonů.
 
@@ -23,6 +23,13 @@ No898 po nahlášení rozbitého `č` v názvu zvolil název bez diakritiky a p�
 - [ ] Změna stavu zapnutí a vyhledávání v seznamu fungují jako předtím; žádné nové Lua chyby.
 
 Název bez diakritiky nevyžaduje zásah do fontu seznamu.
+
+## Opravy z review v alpha.6
+
+- [ ] V Informacích jsou čínské znaky ve jménech překladatelů čitelné a nadpis Překladatelé má českou diakritiku.
+- [ ] Při otevřeném okně vytvoř a rozbal nákupní seznam s českými znaky; ověř nové řádky i po posouvání a přidání nedávného hledání.
+- [ ] Najeď na nastavení automatického hledání seznamu: česká nápověda má správné znaky a zalomení i při opakovaném zobrazení.
+- [ ] Po nápovědě nastavení otevři nápovědu předmětu a jiného addonu: mají původní font. Ověř také skrytí nápovědy při přechodu do boje a absenci Lua/taint chyb.
 
 ## Instalace a načtení
 

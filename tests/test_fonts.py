@@ -1,7 +1,10 @@
 """Font lifecycle regressions; these mocks do not prove WoW rendering."""
 from pathlib import Path
+import hashlib
+import json
 import struct
 import unittest
+import zipfile
 
 from lupa.lua51 import LuaRuntime
 
@@ -161,6 +164,37 @@ class FontRuntimeTests(unittest.TestCase):
         self.assertEqual(self.lua.eval("outside.Normal == original"), True)
         self.assertEqual(self.lua.eval("#button.scripts.OnShow"), 1)
 
+    def test_untranslated_translator_names_keep_the_native_font(self):
+        self.run_lua('''
+          root = CreateFrame("Frame", "AuctionatorConfigFrame")
+          heading = Label(root, "Překladatelé")
+          credit = CreateFrame("Frame", nil, root)
+          credit.TranslatorsText = Label(credit, "sugymaylis, LvWind, 枫聖御雷")
+          Event("ADDON_LOADED", "Auctionator"); Flush()
+        ''')
+        self.assert_font("heading")
+        self.assertEqual(self.lua.eval("credit.TranslatorsText.writes"), 0)
+
+    def test_direct_scroll_boxes_apply_fonts_to_new_rows_without_reopening(self):
+        for name in ("ListsContainer", "RecentsContainer"):
+            with self.subTest(name=name):
+                self.lua.globals().containerName = name
+                self.run_lua('''
+                  root = CreateFrame("Frame", "AuctionatorShoppingFrame")
+                  container = CreateFrame("Frame", nil, root)
+                  root[containerName] = container
+                  container.ScrollBox = CreateFrame("Frame", nil, container)
+                  container.ScrollBox.RegisterCallback = function(self, event, callback, owner)
+                    self.changed = function() callback(owner) end
+                  end
+                  Event("ADDON_LOADED", "Auctionator")
+                  Event("AUCTION_HOUSE_SHOW"); Flush()
+                  local row = CreateFrame("Frame", nil, container.ScrollBox)
+                  newList = Label(row, "Český seznam")
+                  container.ScrollBox.changed(); Flush()
+                ''')
+                self.assert_font("newList")
+
     def test_late_auction_windows_wrappers_and_pooled_rows(self):
         self.run_lua('''
           Event("ADDON_LOADED", "Auctionator"); Flush()
@@ -233,6 +267,102 @@ class FontRuntimeTests(unittest.TestCase):
           Event("ADDON_LOADED", "Auctionator"); Flush()
         ''')
         self.assertEqual(self.lua.eval("label.writes"), 0)
+
+
+class TooltipFontTests(unittest.TestCase):
+    run_lua = FontRuntimeTests.run_lua
+    assert_font = FontRuntimeTests.assert_font
+
+    def setUp(self):
+        FontRuntimeTests.setUp(self)
+        self.run_lua('''
+          GameTooltip = CreateFrame("GameTooltip", "GameTooltip")
+          GameTooltip.Title = Label(GameTooltip, "")
+          GameTooltip.shows = 0
+          function GameTooltip:GetOwner() return self.owner end
+          function GameTooltip:SetOwner(owner) self.owner = owner end
+          function GameTooltip:SetText(text) self.Title:SetText(text) end
+          function GameTooltip:AddLine(text)
+            self.Body = self.Body or Label(self, "")
+            self.Body:SetText(text)
+          end
+          function GameTooltip:Show()
+            self.shows = self.shows + 1
+            assert(self.shows < 30, "Tooltip reflow must not recurse")
+          end
+          function GameTooltip:Hide() self:Fire("OnHide") end
+          owner = CreateFrame("Frame", "AuctionatorConfigControl")
+          owner.tooltipTitleText = "Automatické hledání"
+          owner.tooltipText = "Po výběru seznamu vyhledej jeho položky."
+          Event("ADDON_LOADED", "Auctionator"); Flush()
+        ''')
+        upstream = json.loads((ROOT / "locales/upstream.json").read_text())
+        path = ROOT / ".cache" / f"Auctionator-{upstream['version']}.zip"
+        self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), upstream["archive_sha256"])
+        with zipfile.ZipFile(path) as archive:
+            self.lua.execute(archive.read("Auctionator/Source/Components/Mixins/Tooltip.lua").decode())
+
+    def test_real_config_tooltip_uses_czech_font_and_reflows_only_after_changes(self):
+        self.run_lua("AuctionatorConfigTooltipMixin.OnEnter(owner)")
+        self.assert_font("GameTooltip.Title")
+        self.assert_font("GameTooltip.Body")
+        self.assertEqual(self.lua.eval("GameTooltip.shows"), 2)
+        self.run_lua('''
+          GameTooltip:Show()
+          assert(GameTooltip.shows == 3)
+          extra = Label(GameTooltip, "Další řádek")
+          GameTooltip:Show()
+        ''')
+        self.assert_font("extra")
+        self.assertEqual(self.lua.eval("GameTooltip.shows"), 5)
+
+    def test_hide_and_owner_change_restore_fonts_even_during_combat(self):
+        self.run_lua('''
+          AuctionatorConfigTooltipMixin.OnEnter(owner)
+          foreign = CreateFrame("Frame", "AnotherAddon")
+          GameTooltip:SetOwner(foreign)
+          assert(GameTooltip.Title.path == "Fonts\\\\FRIZQT__.TTF")
+          GameTooltip:Show()
+          assert(GameTooltip.Title.path == "Fonts\\\\FRIZQT__.TTF")
+          AuctionatorConfigTooltipMixin.OnEnter(owner)
+          combat = true
+          AuctionatorConfigTooltipMixin.OnLeave(owner)
+          assert(GameTooltip.Body.path == "Fonts\\\\FRIZQT__.TTF")
+          AuctionatorConfigTooltipMixin.OnEnter(owner)
+        ''')
+        self.assertEqual(self.lua.eval("GameTooltip.Title.path"), "Fonts\\FRIZQT__.TTF")
+
+    def test_restoration_preserves_another_addons_newer_font(self):
+        self.run_lua('''
+          AuctionatorConfigTooltipMixin.OnEnter(owner)
+          GameTooltip.Title:SetFont("OtherAddon.ttf", 15, "")
+          GameTooltip:Hide()
+          assert(GameTooltip.Title.path == "OtherAddon.ttf")
+          AuctionatorConfigTooltipMixin.OnEnter(owner)
+          GameTooltip:Hide()
+          assert(GameTooltip.Title.path == "OtherAddon.ttf")
+          GameTooltip:Show()
+          GameTooltip.Title:SetFont("NewerFont.ttf", 16, "OUTLINE")
+          GameTooltip:Show()
+          GameTooltip:Hide()
+        ''')
+        self.assertEqual(self.lua.eval("GameTooltip.Title.path"), "NewerFont.ttf")
+        self.assertEqual(self.lua.eval("GameTooltip.Title.size"), 16)
+
+    def test_item_foreign_and_protected_tooltips_keep_original_fonts(self):
+        self.run_lua('''
+          item = CreateFrame("Frame", "AuctionatorItemRow")
+          foreign = CreateFrame("Frame", "AnotherAddon")
+          foreign.tooltipText = "Cizí nápověda"
+          Event("AUCTION_HOUSE_SHOW"); Flush()
+          GameTooltip:SetOwner(item); GameTooltip:Show()
+          GameTooltip:SetOwner(foreign); GameTooltip:Show()
+          owner.protected = true
+          GameTooltip:SetOwner(owner); GameTooltip:Show()
+          owner.protected = false
+          GameTooltip.protected = true; GameTooltip:Show()
+        ''')
+        self.assertEqual(self.lua.eval("GameTooltip.Title.writes"), 0)
 
 
 class FontAssetTests(unittest.TestCase):
