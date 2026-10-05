@@ -16,6 +16,28 @@ import catalog
 ROOT = catalog.ROOT
 
 
+def format_arguments(formats):
+    """Provide distinct, correctly typed samples for Lua 5.1 conversions."""
+    arguments = []
+    for spec in formats:
+        if spec == "%%":
+            continue
+        index = len(arguments)
+        conversion = spec[-1]
+        if conversion in "sq":
+            value = f"ARG{index}"
+        elif conversion == "c":
+            value = ord("A") + index % 26
+        elif conversion in "diouxX":
+            value = 101 + index
+        elif conversion in "eEfgG":
+            value = 10.25 + index
+        else:
+            raise ValueError(f"Unsupported Lua format: {spec}")
+        arguments.append(value)
+    return arguments
+
+
 class CatalogueTests(unittest.TestCase):
     def test_catalogue_and_generated_files(self):
         catalog.check()
@@ -123,6 +145,22 @@ class RuntimeTests(unittest.TestCase):
     def resolve(self, lua):
         lua.execute(self.source["Auctionator/Source/Locales/Main.lua"])
 
+    def assert_formatted_translation(self, lua, key, text, formats):
+        arguments = format_arguments(formats)
+        remaining = iter(arguments)
+        lua_format = lua.eval("string.format")
+
+        def format_token(match):
+            spec = match.group()
+            return lua_format(spec) if spec == "%%" else lua_format(spec, next(remaining))
+
+        # Compare the complete output: width, precision, quoted strings and
+        # numeric output cannot reliably be checked by searching for raw args.
+        expected = catalog.FORMAT.sub(format_token, text.replace("\\n", "\n"))
+        actual = lua.globals().Auctionator.Locales.Apply(key, *arguments)
+        self.assertEqual(actual, expected, key)
+        return actual
+
     def test_source_parser_matches_actual_lua_and_snapshot(self):
         lua = self.runtime()
         actual = dict(lua.globals().AUCTIONATOR_LOCALES.enUS().items())
@@ -187,14 +225,33 @@ class RuntimeTests(unittest.TestCase):
         for key, record in self.upstream["strings"].items():
             if not record["format"]:
                 continue
-            args = [f"ARG{i}" for i, spec in enumerate(record["format"]) if spec != "%%"]
-            rendered = apply(key, *args)
-            positions = [rendered.index(arg) for arg in args]
-            self.assertEqual(positions, sorted(positions), key)
+            self.assert_formatted_translation(lua, key, self.cs[key], record["format"])
         self.assertEqual(apply("BUYING_X_FOR_X", "Měděná ruda", "12 zl."), "Nákup: Měděná ruda za 12 zl.")
         self.assertEqual(apply("TOTAL_OF_X_FOR_UNIT_PRICE_OF_X", "20 zl.", "2 zl."),
                          "Celková cena: 20 zl., cena za kus: 2 zl.")
         self.assertEqual(lua.globals().AUCTIONATOR_L_LIST_SEARCH_STATUS.count("\n"), 1)
+
+    def test_format_checks_accept_numeric_character_and_string_conversions(self):
+        cases = [
+            ("Počet: %d; cena: %.2f; název: %.3s; citace: %q; %%",
+             'Počet: 101; cena: 11.25; název: ARG; citace: "ARG3"; %'),
+            ("Čísla: %i %u %o %x %X; znak: %c",
+             "Čísla: 101 102 147 68 69; znak: F"),
+            ("Hodnoty: %e %E %f %g %G; doplněné: %05d",
+             "Hodnoty: 1.025000e+01 1.125000E+01 12.250000 13.25 14.25; doplněné: 00106"),
+            ("%% první=%d; %% druhý=%d", "% první=101; % druhý=102"),
+        ]
+        for text, expected in cases:
+            with self.subTest(text=text):
+                lua = self.runtime()
+                # Inject a future catalogue entry through the real callback and
+                # resolver, so newly added numeric keys exercise the same check.
+                lua.execute(catalog.render({"FORMAT_REVIEW": text}, "test"))
+                self.resolve(lua)
+                actual = self.assert_formatted_translation(
+                    lua, "FORMAT_REVIEW", text, catalog.FORMAT.findall(text)
+                )
+                self.assertEqual(actual, expected)
 
 
 if __name__ == "__main__":

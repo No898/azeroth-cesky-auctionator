@@ -2,7 +2,7 @@
 
 Samostatný český překlad [Auctionatoru](https://www.curseforge.com/wow/addons/auctionator), spravovaný projektem [Azeroth česky](https://github.com/No898/azeroth-cesky).
 
-**První testovací verze `0.1.0-alpha.1` pro WoW: Forever 1.60.1 a Auctionator 340.** Přeloženo je všech **451 textů jeho lokalizačního katalogu**. Kontroly katalogu a izolované testy v Lua 5.1 jsou součástí projektu. Vzhled, diakritiku, délku popisků a skutečné pořadí načtení je před stabilním vydáním potřeba ověřit ve hře.
+**Testovací verze `0.1.0-alpha.2` pro WoW: Forever 1.60.1 a Auctionator 340.** Přeloženo je všech **451 textů jeho lokalizačního katalogu**. Kontroly katalogu a izolované testy v Lua 5.1 jsou součástí projektu. Vzhled, diakritiku, délku popisků a skutečné pořadí načtení je před stabilním vydáním potřeba ověřit ve hře.
 
 ## Instalace
 
@@ -47,7 +47,7 @@ python3 -m venv .venv
 
 `fetch` stáhne konkrétní oficiální vydání Auctionatoru a ověří SHA-256. Testy používají jeho skutečný lokalizační resolver; nepouštějí WoW. Instalační ZIP a jeho kontrolní součet vzniknou v `dist/`. Na Windows použij `.venv\Scripts\python.exe`.
 
-Překlady se upravují v [`locales/csCZ.json`](locales/csCZ.json). Po úpravě spusť:
+Překlady se upravují v [`locales/csCZ.json`](https://github.com/No898/azeroth-cesky-auctionator/blob/main/locales/csCZ.json). Po úpravě spusť:
 
 ```sh
 python3 scripts/catalog.py build
@@ -55,7 +55,7 @@ python3 scripts/catalog.py build
 
 Vygenerovaný `addon/AAzerothAuctionator/Translations.lua` se ukládá do repozitáře, ale neupravuje ručně. Po každé změně spusť kontroly a testy. CI navíc vytvoří instalační ZIP jako artefakt; nic automaticky nepublikuje na CurseForge.
 
-Postup aktualizace: [CONTRIBUTING.md](CONTRIBUTING.md). Kontrola ve hře: [docs/GAME_TEST.md](docs/GAME_TEST.md). Architektura: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+Postup aktualizace: [CONTRIBUTING.md](https://github.com/No898/azeroth-cesky-auctionator/blob/main/CONTRIBUTING.md). Kontrola ve hře: [docs/GAME_TEST.md](https://github.com/No898/azeroth-cesky-auctionator/blob/main/docs/GAME_TEST.md). Architektura: [docs/ARCHITECTURE.md](https://github.com/No898/azeroth-cesky-auctionator/blob/main/docs/ARCHITECTURE.md).
 
 ## Autoři
 
