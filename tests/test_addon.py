@@ -104,11 +104,13 @@ class CatalogueTests(unittest.TestCase):
         with zipfile.ZipFile(path) as archive:
             self.assertEqual(set(archive.namelist()), {
                 f"{catalog.ADDON}/{catalog.ADDON}.toc", f"{catalog.ADDON}/Translations.lua",
+                f"{catalog.ADDON}/Fonts.lua", f"{catalog.ADDON}/Fonts/GentiumBook-Regular.ttf",
+                f"{catalog.ADDON}/Fonts/OFL.txt",
                 f"{catalog.ADDON}/README.md", f"{catalog.ADDON}/CHANGELOG.md",
             })
             toc = archive.read(f"{catalog.ADDON}/{catalog.ADDON}.toc").decode()
             lua_files = [line for line in toc.splitlines() if line and not line.startswith("#")]
-            self.assertEqual(lua_files, ["Translations.lua"])
+            self.assertEqual(lua_files, ["Translations.lua", "Fonts.lua"])
             for filename in lua_files:
                 self.assertEqual(archive.read(f"{catalog.ADDON}/{filename}"),
                                  (ROOT / "addon" / catalog.ADDON / filename).read_bytes())

@@ -149,6 +149,9 @@ def package():
     files = {
         f"{ADDON}/{ADDON}.toc": ROOT / "addon" / ADDON / f"{ADDON}.toc",
         f"{ADDON}/Translations.lua": ROOT / "addon" / ADDON / "Translations.lua",
+        f"{ADDON}/Fonts.lua": ROOT / "addon" / ADDON / "Fonts.lua",
+        f"{ADDON}/Fonts/GentiumBook-Regular.ttf": ROOT / "addon" / ADDON / "Fonts/GentiumBook-Regular.ttf",
+        f"{ADDON}/Fonts/OFL.txt": ROOT / "addon" / ADDON / "Fonts/OFL.txt",
         f"{ADDON}/README.md": ROOT / "README.md",
         f"{ADDON}/CHANGELOG.md": ROOT / "CHANGELOG.md",
     }

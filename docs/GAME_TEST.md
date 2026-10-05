@@ -1,6 +1,17 @@
 # Ověření ve WoW: Forever
 
-Stav: **neprovedeno**. Izolované Lua testy neověřují herní loader, fonty ani rozložení. Pro první stabilní verzi vyplň výsledek, datum, build klienta a verze obou addonů.
+Stav: **první test alpha.2 odhalil chyby; opakované ověření alpha.3 čeká**. Snímky od No898 z 5. 10. 2026 po místní instalaci do Forever 1.60.1 s Auctionatorem 340 potvrzují načtené české texty, ale také chybějící glyfy ř/ě/ň/č v popiscích a datech, překryv Nový seznam / Importovat a zkrácené dlouhé názvy filtrů a sloupců. Přesná zapnutá sada addonů a měřítko UI nejsou potvrzené.
+
+Alpha.3 přidává vlastní font s českými glyfy a zkracuje problematické popisky. Izolované Lua testy neověřují herní rasterizaci ani rozložení. Pro první stabilní verzi vyplň výsledek, datum, build klienta a verze obou addonů.
+
+## Opakování nahlášených chyb v alpha.3
+
+- [ ] Po úplném restartu otevři nastavení a rozšířené hledání: ř, ě, ň, č se zobrazují správně.
+- [ ] Nový seznam, Import a Export se nepřekrývají; zkontroluj i najetí myší a vypnutá tlačítka.
+- [ ] Cena odkupu, Úr. použití, Úroveň předm. a Úr. předm. se vejdou do filtrů a sloupců.
+- [ ] V historii cen mají neděle / říjen / čtvrtek správné znaky i po posunu tabulky a novém hledání.
+- [ ] Font funguje i při zapnutém samotném Auctionatoru a českém modulu, bez hlavního Azeroth česky.
+- [ ] Nativní záložky a jiná okna hry mají původní fonty; po vypnutí modulu a `/reload` se vrátí i fonty Auctionatoru.
 
 ## Instalace a načtení
 

@@ -12,7 +12,22 @@ Auctionator.toc
   → převede \\n a exportuje AUCTIONATOR_L_* pro svoje UI
 ```
 
-Factory při každém zavolání vrací novou tabulku. Náš jediný zápis do globálního prostoru je zveřejněný callback. Modul nepotřebuje události, uložené proměnné, knihovny, síť, protected frames ani runtime přepisování UI. Bez Auctionatoru pouze vytvoří callback a dál nic nedělá.
+Factory při každém zavolání vrací novou tabulku. Překladový soubor zapisuje pouze zveřejněný callback. Od `alpha.3` samostatný `Fonts.lua` doplňuje font s českými znaky do vlastních oken Auctionatoru; chybějící glyfy v klientském fontu samotný katalog nevyřeší. Modul nemá uložené proměnné, síť ani závislost na hlavním Azeroth česky. Bez Auctionatoru fontová část neprovádí žádné změny.
+
+## Font
+
+Distribuujeme původní nezměněný `GentiumBook-Regular.ttf` z Gentium Book 7.000, Copyright (c) 2003–2025 SIL Global, pod SIL Open Font License 1.1. Celá licence je součástí ZIPu v `Fonts/OFL.txt`. Zdroj: [oficiální archiv SIL](https://software.sil.org/downloads/r/gentium/GentiumBook-7.000.zip). Stejný soubor používá hlavní Azeroth česky, ale tento modul obsahuje vlastní kopii a funguje samostatně.
+
+| Soubor | SHA-256 |
+| --- | --- |
+| GentiumBook-Regular.ttf | `2027f6a864e5a9907c113438969d1d03fa91dfdd1a3885fa0fdeb496f0f682e4` |
+| OFL.txt | `dcae5818b104b6cb24334bb4c92f7896d1ac988529ca4654ff21361a7b5b94ee` |
+
+Fontová část hledá pouze pojmenované rámce `Auctionator*` a jejich potomky, včetně vlastních anonymních obalů záložek. Nemění sdílené objekty `GameFont*`, rodičovský AuctionFrame ani herní globální texty. Zachovává velikost, styl a barvu; tlačítka dostávají soukromé kopie fontů pro normální, zvýrazněný i vypnutý stav. Skenovací tooltipy, protected a forbidden rámce vynechává. Za boje se změny odkládají do `PLAYER_REGEN_ENABLED`.
+
+Po načtení Auctionatoru a otevření aukce proběhne jednorázové vyhledání jeho oken. `OnShow`, vlastní továrny nastavení/dialogů a události výsledkových tabulek zachytí dodatečně vytvořené texty i řádky při posouvání. Obnovy se slučují do následujícího snímku; neběží žádná periodická kontrola ani globální hook vytváření rámců. Callbacky posouvání používají samostatného vlastníka, aby nenahradily registrace Auctionatoru. Post-hooky nemění návratové hodnoty ani aukční funkce. Při vypnutí modulu a novém načtení rozhraní se původní fonty obnoví vytvořením původního UI.
+
+Lua testy kontrolují rozsah zásahů, stavy tlačítek, pozdní vytvoření a posouvání řádků, odložení za boje a opakované otevření. Kontrola skutečné cmap tabulky fontu ověřuje české glyfy. Herní rasterizaci a spolupráci s ostatními addony musejí ověřit herní testy.
 
 Složka se nesmí přejmenovat: `AAzerothAuctionator` se řadí před `Auctionator`. Manifest se jmenuje stejně jako složka. `Title` obsahuje samostatný název zobrazený hráči. TOC nemá závislost na Auctionatoru a není LoadOnDemand. Skutečný loader hry je potřeba ověřit ve hře; Lua testy ho nesimulují jako důkaz kompatibility.
 

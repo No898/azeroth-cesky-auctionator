@@ -1,5 +1,12 @@
 # Změny
 
+## 0.1.0-alpha.3 — 2026-10-05
+
+- Přibalený Gentium Book doplňuje české glyfy do vlastních oken Auctionatoru včetně tlačítek, nastavení a dodatečně vytvořených řádků historie cen. Velikost písma, barvy a herní fonty mimo Auctionator zůstávají zachované.
+- Kratší popisky Import, Export, Nastavení, Cena odkupu, Příhoz a úrovní pro omezený prostor tlačítek, filtrů a sloupců.
+- Regresní testy fontů, stavů tlačítek, posouvání výsledků, rozsahu zásahů a odložení za boje; test českých glyfů přímo v přibaleném TTF. Licence fontu je součástí balíčku.
+- Oprava reaguje na snímky z prvního testu alpha.2. Vzhled alpha.3 ve hře je ještě potřeba potvrdit.
+
 ## 0.1.0-alpha.2 — 2026-10-05
 
 - Testy formátování používají správné typy argumentů pro číselné, znakové a textové značky Lua a kontrolují celý výsledný text včetně šířky, přesnosti a doslovného procenta.
