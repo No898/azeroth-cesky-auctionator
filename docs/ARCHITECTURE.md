@@ -29,6 +29,14 @@ Po načtení Auctionatoru a otevření aukce proběhne jednorázové vyhledání
 
 Lua testy kontrolují rozsah zásahů, stavy tlačítek, pozdní vytvoření a posouvání řádků, odložení za boje a opakované otevření. Kontrola skutečné cmap tabulky fontu ověřuje české glyfy. Herní rasterizaci a spolupráci s ostatními addony musejí ověřit herní testy.
 
+### Vlastní položka v seznamu addonů
+
+Od `alpha.4` doplňuje `AddonList.lua` jedinou cílenou výjimku mimo okna Auctionatoru: font vlastního názvu v nativním seznamu otevřeném přes Esc. Identitu řádku ověřuje podle jeho indexu a názvu `AAzerothAuctionator` přes API klienta. Text názvu, ikonu, barvy a stav zapnutí ponechává klientovi. Při recyklaci řádku obnoví původní font, pokud ho mezitím nezměnil jiný addon. Neplatné indexy a protected/forbidden rámce vynechá, změny odloží za boje. Fontové objekty ostatních addonů se nepřepisují.
+
+Post-hook řádkového inicializátoru a obnovy seznamu doplňují `OnShow` a vlastní callback posouvání. Referencí pro názvy funkcí je [zdroj nativního AddonList](https://github.com/Gethe/wow-ui-source/blob/live/Interface/AddOns/Blizzard_AddOnList/AddonList.lua); dostupnost se kontroluje za běhu a starší seznam může využít samotný `AddonList_Update`. Protože addon Lua před vstupem do hry neběží, oprava fontu se nevztahuje na výběr postavy.
+
+Logo v `Textures/AddonLogo.tga` je nezměněná kopie loga hlavního Azeroth česky z místní instalace, převzatá na výslovné přání autora. SHA-256: `3560d56d094cdb2948bdeb3f53aecd140193c34283c28195e8bb43f72dd8d929`. TOC odkazuje na vlastní kopii přes `IconTexture`; hlavní addon není potřeba.
+
 Složka se nesmí přejmenovat: `AAzerothAuctionator` se řadí před `Auctionator`. Manifest se jmenuje stejně jako složka. `Title` obsahuje samostatný název zobrazený hráči. TOC nemá závislost na Auctionatoru a není LoadOnDemand. Skutečný loader hry je potřeba ověřit ve hře; Lua testy ho nesimulují jako důkaz kompatibility.
 
 Jeden globální callback znamená jeden aktivní překladový modul. Při více modulech záleží na pořadí zápisů a poslední může předchozí překlad nahradit. Proto se podporuje zapnutý pouze tento modul. Vlastní nastavení jazyka není potřeba; zapnutí addonu zvolí češtinu, vypnutí a načtení rozhraní obnoví jazyk klienta.

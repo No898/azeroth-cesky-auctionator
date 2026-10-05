@@ -13,6 +13,17 @@ Alpha.3 přidává vlastní font s českými glyfy a zkracuje problematické pop
 - [ ] Font funguje i při zapnutém samotném Auctionatoru a českém modulu, bez hlavního Azeroth česky.
 - [ ] Nativní záložky a jiná okna hry mají původní fonty; po vypnutí modulu a `/reload` se vrátí i fonty Auctionatoru.
 
+## Název a logo v alpha.4
+
+No898 doplnil snímek rozbitého `č` v názvu a potvrdil, že seznam otevřel přes Esc už ve hře. Alpha.4 proto rozšiřuje fontovou opravu pouze na vlastní řádek v tomto seznamu a přidává požadované původní logo.
+
+- [ ] Po úplném restartu a přihlášení otevři Esc → AddOns: naše položka má logo hlavního Azeroth česky a správné `č`.
+- [ ] Posuň seznam mimo naši položku a zpět; název zůstává správný a fonty jiných addonů se nemění.
+- [ ] Zopakuj kontrolu bez hlavního Azeroth česky, pouze s Auctionatorem a českým modulem.
+- [ ] Změna stavu zapnutí a vyhledávání v seznamu fungují jako předtím; žádné nové Lua chyby.
+
+Seznam před přihlášením používá font klienta; jeho diakritiku náš ještě nenačtený Lua modul nemůže opravit.
+
 ## Instalace a načtení
 
 - [ ] Nainstaluj instalační ZIP do klienta Forever 1.60.1, vedle Auctionatoru 340.

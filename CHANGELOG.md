@@ -1,5 +1,12 @@
 # Změny
 
+## 0.1.0-alpha.4 — 2026-10-05
+
+- Stejné logo jako hlavní Azeroth česky, přibalené přímo v modulu a připojené přes `IconTexture` v TOC.
+- Oprava českých znaků v názvu „Azeroth česky: Auctionator“ v seznamu addonů otevřeném přes Esc už ve hře. Název ani sdílené herní fonty se nemění.
+- Při opětovném použití řádku pro jiný addon se náš font obnoví na původní; testy pokrývají posouvání, pozdní načtení seznamu a ochranu ostatních řádků.
+- Vyžaduje úplný restart klienta kvůli novému Lua souboru a ikoně v metadatech. Ověření vzhledu ve hře čeká.
+
 ## 0.1.0-alpha.3 — 2026-10-05
 
 - Přibalený Gentium Book doplňuje české glyfy do vlastních oken Auctionatoru včetně tlačítek, nastavení a dodatečně vytvořených řádků historie cen. Velikost písma, barvy a herní fonty mimo Auctionator zůstávají zachované.

@@ -35,7 +35,7 @@ V repozitáři jsou otisky každé anglické hodnoty, formátovací značky a od
 
 ## Distribuce
 
-Balíček vytvoří `python3 scripts/catalog.py package`. Obsahuje pouze složku `AAzerothAuctionator` a sedm povolených souborů: TOC, katalog Lua, fontový modul Lua, font TTF s licencí OFL, README a changelog. Publikuj připravený ZIP, ne zdrojový archiv GitHubu. Alpha verze označ jako předběžné vydání a uveď neověřené kontroly.
+Balíček vytvoří `python3 scripts/catalog.py package`. Obsahuje pouze složku `AAzerothAuctionator` a devět povolených souborů: TOC, katalog Lua, fontový modul Lua, opravu vlastního názvu v herním seznamu addonů, font TTF s licencí OFL, logo TGA, README a changelog. Publikuj připravený ZIP, ne zdrojový archiv GitHubu. Alpha verze označ jako předběžné vydání a uveď neověřené kontroly.
 
 Pro budoucí distribuci přes CurseForge založ samostatný projekt a v jeho vztazích uveď Auctionator jako požadovaný addon. **Nepřidávej `Dependencies: Auctionator` ani `OptionalDeps: Auctionator` do našeho TOC:** tyto direktivy by vynutily opačné pořadí načtení. Vydávání na CurseForge zatím není nakonfigurované.
 
