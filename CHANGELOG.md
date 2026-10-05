@@ -1,5 +1,12 @@
 # Změny
 
+## 0.1.0 — 2026-10-06
+
+- První vydání označené jako Release. Překlad i běhový kód odpovídají prověřené verzi alpha.6.
+- Všech 451 textů Auctionatoru 340 v češtině, vlastní font s českou diakritikou, kratší popisky a logo Azeroth česky.
+- Vyžaduje samostatný Auctionator; hlavní Azeroth česky je volitelný. Cílový klient je WoW: Forever 1.60.1.
+- Automatické testy ověřují katalog, Lua 5.1, fontové regrese a balíček. Úplná herní kontrola posledních oprav fontů a rozložení zůstává otevřená.
+
 ## 0.1.0-alpha.6 — 2026-10-05
 
 - Nepřekládaná jména překladatelů si ponechávají původní font, aby se neztratily čínské znaky. Český nadpis se nadále zobrazuje přibaleným fontem.

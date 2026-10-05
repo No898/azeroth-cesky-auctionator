@@ -1,8 +1,8 @@
 # Ověření ve WoW: Forever
 
-Stav: **první test alpha.2 odhalil chyby; úplné ověření aktuální alpha.6 čeká**. Snímky od No898 z 5. 10. 2026 po místní instalaci do Forever 1.60.1 s Auctionatorem 340 potvrzují načtené české texty, ale také chybějící glyfy ř/ě/ň/č v popiscích a datech, překryv Nový seznam / Importovat a zkrácené dlouhé názvy filtrů a sloupců. Přesná zapnutá sada addonů a měřítko UI nejsou potvrzené.
+Stav: **první test alpha.2 odhalil chyby; úplné ověření oprav v 0.1.0 čeká**. Vydání 0.1.0 přebírá překlad i běhový kód alpha.6. Snímky od No898 z 5. 10. 2026 po místní instalaci do Forever 1.60.1 s Auctionatorem 340 potvrzují načtené české texty, ale také chybějící glyfy ř/ě/ň/č v popiscích a datech, překryv Nový seznam / Importovat a zkrácené dlouhé názvy filtrů a sloupců. Přesná zapnutá sada addonů a měřítko UI nejsou potvrzené.
 
-Alpha.3 přidává vlastní font s českými glyfy a zkracuje problematické popisky. Izolované Lua testy neověřují herní rasterizaci ani rozložení. Pro první stabilní verzi vyplň výsledek, datum, build klienta a verze obou addonů.
+Alpha.3 přidala vlastní font s českými glyfy a zkrátila problematické popisky. Izolované Lua testy neověřují herní rasterizaci ani rozložení. Při ověření 0.1.0 vyplň výsledek, datum, build klienta a verze obou addonů; označení Release samo o sobě neznamená splnění tohoto checklistu.
 
 ## Opakování nahlášených chyb v alpha.3
 
