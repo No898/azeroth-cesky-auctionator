@@ -1,0 +1,2 @@
+# Keep the upstream font license byte-identical, including its CRLF endings.
+addon/AAzerothAuctionator/Fonts/OFL.txt -text whitespace=cr-at-eol
