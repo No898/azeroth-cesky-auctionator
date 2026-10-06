@@ -1,5 +1,9 @@
 # Změny
 
+## 0.1.1 — 2026-10-06
+
+- Popis a autor v metadatech addonu jsou bez diakritiky, aby se správně zobrazovaly původním herním fontem v seznamu addonů.
+
 ## 0.1.0 — 2026-10-06
 
 - První vydání označené jako Release. Překlad i běhový kód odpovídají prověřené verzi alpha.6.

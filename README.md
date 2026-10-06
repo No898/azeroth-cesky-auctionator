@@ -2,7 +2,7 @@
 
 Samostatný český překlad [Auctionatoru](https://www.curseforge.com/wow/addons/auctionator), spravovaný projektem [Azeroth česky](https://github.com/No898/azeroth-cesky).
 
-**Verze `0.1.0` pro WoW: Forever 1.60.1 a Auctionator 340.** Přeloženo je všech **451 textů jeho lokalizačního katalogu**. Vydání obsahuje font s českými znaky a kratší popisky podle prvního testu ve hře. V seznamu addonů se modul jmenuje **Azeroth cesky: Auctionator**, používá původní herní font a stejné logo jako hlavní Azeroth česky. Kontroly katalogu a izolované testy v Lua 5.1 jsou součástí projektu; úplná herní kontrola posledních oprav fontů a rozložení ještě čeká.
+**Verze `0.1.1` pro WoW: Forever 1.60.1 a Auctionator 340.** Přeloženo je všech **451 textů jeho lokalizačního katalogu**. Vydání obsahuje font s českými znaky a kratší popisky podle prvního testu ve hře. V seznamu addonů se modul jmenuje **Azeroth cesky: Auctionator**, používá původní herní font a stejné logo jako hlavní Azeroth česky. Kontroly katalogu a izolované testy v Lua 5.1 jsou součástí projektu; úplná herní kontrola posledních oprav fontů a rozložení ještě čeká.
 
 ## Instalace
 
@@ -73,4 +73,4 @@ Auctionator: **plusmouse, Borjamacare a přispěvatelé původního projektu**. 
 
 Přibalený nezměněný **Gentium Book 7.000 Regular**: Copyright (c) 2003–2025 SIL Global. Licence SIL Open Font License 1.1 je v `Fonts/OFL.txt`; původ a kontrolní součty jsou v [dokumentaci](https://github.com/No898/azeroth-cesky-auctionator/blob/main/docs/ARCHITECTURE.md#font).
 
-English: standalone Czech translation for Auctionator, using its supported `AUCTIONATOR_LOCALES_OVERRIDE` callback. Requires Auctionator, but not Azeroth česky. Version 0.1.0 targets WoW: Forever 1.60.1 and Auctionator 340. Full in-game verification of the latest font and layout fixes is pending.
+English: standalone Czech translation for Auctionator, using its supported `AUCTIONATOR_LOCALES_OVERRIDE` callback. Requires Auctionator, but not Azeroth česky. Version 0.1.1 targets WoW: Forever 1.60.1 and Auctionator 340. Full in-game verification of the latest font and layout fixes is pending.

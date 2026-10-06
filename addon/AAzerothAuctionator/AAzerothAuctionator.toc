@@ -1,8 +1,8 @@
 ## Interface: 16001
 ## Title: Azeroth cesky: Auctionator
-## Notes: Český překlad Auctionatoru. Vyžaduje samostatně nainstalovaný Auctionator.
-## Author: Azeroth česky (No898)
-## Version: 0.1.0
+## Notes: Cesky preklad Auctionatoru. Vyzaduje samostatne nainstalovany Auctionator.
+## Author: Azeroth cesky (No898)
+## Version: 0.1.1
 ## IconTexture: Interface\AddOns\AAzerothAuctionator\Textures\AddonLogo.tga
 ## X-Website: https://github.com/No898/azeroth-cesky-auctionator
 ## X-Category: Auction/Economy
