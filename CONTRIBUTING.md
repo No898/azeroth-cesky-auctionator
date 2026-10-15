@@ -35,9 +35,10 @@ V repozitáři jsou otisky každé anglické hodnoty, formátovací značky a od
 
 ## Distribuce
 
-Veřejný popis udržuj v [docs/CURSEFORGE_DESCRIPTION.md](docs/CURSEFORGE_DESCRIPTION.md).
-Při aktualizaci Description na CurseForge použij tento podklad a zachovej
-odkaz na `https://azerothcesky.cz/` v anglické i české části.
+Veřejné popisy udržuj v [podkladu pro CurseForge](docs/CURSEFORGE_DESCRIPTION.md)
+a [podkladu pro Wago](docs/WAGO_DESCRIPTION.md). Při jejich aktualizaci použij
+příslušný podklad a zachovej odkaz na `https://azerothcesky.cz/` v anglické
+i české části.
 
 Balíček vytvoří `python3 scripts/catalog.py package`. Obsahuje pouze složku `AAzerothAuctionator` a osm povolených souborů: TOC, katalog Lua, fontový modul Lua, font TTF s licencí OFL, logo TGA, README a changelog. Publikuj připravený ZIP, ne zdrojový archiv GitHubu. Alpha verze označ jako předběžné vydání a uveď neověřené kontroly.
 
