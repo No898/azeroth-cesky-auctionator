@@ -2,6 +2,9 @@
 
 Samostatný český překlad [Auctionatoru](https://www.curseforge.com/wow/addons/auctionator), spravovaný projektem [Azeroth česky](https://github.com/No898/azeroth-cesky).
 
+Web projektu: [azerothcesky.cz](https://azerothcesky.cz/).
+Zdroj veřejného popisu: [popis na CurseForge](docs/CURSEFORGE_DESCRIPTION.md).
+
 **Verze `0.1.1` pro WoW: Forever 1.60.1 a Auctionator 340.** Přeloženo je všech **451 textů jeho lokalizačního katalogu**. Vydání obsahuje font s českými znaky a kratší popisky podle prvního testu ve hře. V seznamu addonů se modul jmenuje **Azeroth cesky: Auctionator**, používá původní herní font a stejné logo jako hlavní Azeroth česky. Kontroly katalogu a izolované testy v Lua 5.1 jsou součástí projektu; úplná herní kontrola posledních oprav fontů a rozložení ještě čeká.
 
 ## Instalace
