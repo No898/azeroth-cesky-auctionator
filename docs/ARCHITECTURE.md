@@ -12,7 +12,22 @@ Auctionator.toc
   → převede \\n a exportuje AUCTIONATOR_L_* pro svoje UI
 ```
 
-Factory při každém zavolání vrací novou tabulku. Překladový soubor zapisuje pouze zveřejněný callback. Od `alpha.3` samostatný `Fonts.lua` doplňuje font s českými znaky do vlastních oken Auctionatoru; chybějící glyfy v klientském fontu samotný katalog nevyřeší. Modul nemá uložené proměnné, síť ani závislost na hlavním Azeroth česky. Bez Auctionatoru fontová část neprovádí žádné změny.
+Factory při každém zavolání vrací novou tabulku. Překladový soubor zapisuje pouze zveřejněný callback. Od `alpha.3` samostatný `Fonts.lua` doplňuje font s českými znaky do vlastních oken Auctionatoru; chybějící glyfy v klientském fontu samotný katalog nevyřeší. Historická verze 0.1.1 neměla uložené proměnné. Soukromý kandidát 0.1.2-preview.1 přidává dvě preference překladu pro postavu (`ui` a `settings`) a samostatné příkazy; hlavní Azeroth česky zůstává volitelný. Modul nemá síťové operace. Bez Auctionatoru fontová část neprovádí žádné změny.
+
+## Kontextové UI a nastavení v 0.1.2-preview.1
+
+Nový kandidát má rozlišovat běžnou prezentaci Auctionatoru a jeho nastavení
+podle konkrétní vlastněné plochy. Obě kategorie mohou být zapnuté nezávisle;
+samotný sdílený lokalizační klíč ani přepnutí celého locale override tento
+rozdíl nedokládá. Při vypnutí kategorie se obnovují také aktuálně otevřené
+texty a fonty, s kontrolou vlastníka a bezpečným odložením při boji či ochraně
+rámce. Opětovné zapnutí používá aktuální zdrojový text.
+
+Volitelné `AzerothCeskyAPI.GetCompanionControls(1)` propojuje stejné uložené
+preference s hlavním addonem pod identitou `AAzerothAuctionator`; nevytváří
+druhou kopii hodnot a není nutné pro samostatné příkazy
+`/azca ui on|off` a `/azca settings on|off`. Nové chování, stavy a čekající
+důkazy popisuje [COMPANION_CONTROLS.md](COMPANION_CONTROLS.md).
 
 ## Font
 
@@ -39,7 +54,7 @@ Logo v `Textures/AddonLogo.tga` je nezměněná kopie loga hlavního Azeroth če
 
 Složka se nesmí přejmenovat: `AAzerothAuctionator` se řadí před `Auctionator`. Manifest se jmenuje stejně jako složka. `Title` obsahuje samostatný název zobrazený hráči. TOC nemá závislost na Auctionatoru a není LoadOnDemand. Skutečný loader hry je potřeba ověřit ve hře; Lua testy ho nesimulují jako důkaz kompatibility.
 
-Jeden globální callback znamená jeden aktivní překladový modul. Při více modulech záleží na pořadí zápisů a poslední může předchozí překlad nahradit. Proto se podporuje zapnutý pouze tento modul. Vlastní nastavení jazyka není potřeba; zapnutí addonu zvolí češtinu, vypnutí a načtení rozhraní obnoví jazyk klienta.
+Jeden globální callback znamená jeden aktivní překladový modul. Při více modulech záleží na pořadí zápisů a poslední může předchozí překlad nahradit. Proto se podporuje zapnutý pouze tento modul. Volba jiného jazyka není součástí tohoto modulu. V kandidátu řídí češtinu samostatné UI/settings preference; úplné vypnutí addonu a načtení rozhraní obnoví jazyk klienta.
 
 ## Referenční upstream
 

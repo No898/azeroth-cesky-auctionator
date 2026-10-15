@@ -1,0 +1,55 @@
+{
+  "scope": "private-companion-controls-offline-verification",
+  "verifiedAtUtc": "2026-10-15T15:00:24.664181+00:00",
+  "version": "0.1.2-preview.1",
+  "unitTestMethods": 65,
+  "newControlsTestMethods": 36,
+  "catalogKeys": 451,
+  "allSequentialGateCommandsPassed": true,
+  "gateInputsStable": true,
+  "warnings": 0,
+  "zip": {
+    "filename": "AAzerothAuctionator-0.1.2-preview.1.zip",
+    "sha256": "f5fd6455ab87ff6c6b6a311ce82a03ddec41f09a4e31d2d1d1a4dcd55b1c17a6",
+    "fileCount": 10,
+    "readbackMatchesSources": true,
+    "filesSha256": {
+      "AAzerothAuctionator/AAzerothAuctionator.toc": "8b08455874960fbe556757c8f92e27983637b7984500ba9168c45ead59e5386d",
+      "AAzerothAuctionator/CHANGELOG.md": "bcee531db78a394108b4bfa9362e819eb9202e3a037feff7fa7dfc391d206eb2",
+      "AAzerothAuctionator/Controls.lua": "ea24ce7a6932e945fea0cc6110a74040ada8c5e3b40417625da4a4ab8414545a",
+      "AAzerothAuctionator/Fonts.lua": "c785238814d1b06136dd9ffd3169d4be866dccfa7a65fcb04b7b63e7d22c5678",
+      "AAzerothAuctionator/Fonts/GentiumBook-Regular.ttf": "2027f6a864e5a9907c113438969d1d03fa91dfdd1a3885fa0fdeb496f0f682e4",
+      "AAzerothAuctionator/Fonts/OFL.txt": "dcae5818b104b6cb24334bb4c92f7896d1ac988529ca4654ff21361a7b5b94ee",
+      "AAzerothAuctionator/Presentation.lua": "fa0f28ace9b513eb0cf296920804da9eb337dab83c2f91c0c5acf84e21215004",
+      "AAzerothAuctionator/README.md": "b5ca1d673c62a6b96ea529e47efad809f4e5f0991e5e5c0a5053e83fee92629a",
+      "AAzerothAuctionator/Textures/AddonLogo.tga": "3560d56d094cdb2948bdeb3f53aecd140193c34283c28195e8bb43f72dd8d929",
+      "AAzerothAuctionator/Translations.lua": "50c0a8d567f602c0b33dabb891a7740fe52f0c6a6539f1de673465ffda7870d0"
+    }
+  },
+  "coreControlsReplay": {
+    "kind": "actual-core-plus-three-actual-controls-modules",
+    "inputKind": "exact-zips",
+    "coreSha256": {
+      "Core/SafeRead.lua": "a6843c011e035a0e3ac645c6d81144a2b4c2b6c3c70ddc30a8653916cf39f571",
+      "Core/CompanionControls.lua": "cc7bdeab2114fbfa0403b5835b34b7fc5290ef36f88a38545f578eedabc297af",
+      "Core/CompanionAPI.lua": "3792b70f7f06b7e68e917b28131a5e771624f90a7ee89c34f89c044fee3a2745"
+    },
+    "companionZipSha256": {
+      "questie": "3a81463b0a52819b577f0b3f80c2ce113278df2a5af05c2ddf17362c67fe1220",
+      "auctionator": "f5fd6455ab87ff6c6b6a311ce82a03ddec41f09a4e31d2d1d1a4dcd55b1c17a6",
+      "rxp": "7d4c91777ecea1813a1f0533add2065abc34ab4288976685f41b060971db4f93"
+    },
+    "fourCombinations": true,
+    "noOpNoRevisionRenderOrEvent": true,
+    "companionIndependence": true,
+    "rendererHostStub": true,
+    "upstreamSurfaceProof": false
+  },
+  "postGateChanges": [
+    "docs/COMPANION_CONTROLS.md"
+  ],
+  "postGateChangesAreNonPackagedDocumentationOnly": true,
+  "gameVerified": false,
+  "installationProofIncluded": false,
+  "published": false
+}

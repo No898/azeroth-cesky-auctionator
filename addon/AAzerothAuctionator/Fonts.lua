@@ -1,3 +1,150 @@
+-- Category-aware font ownership. The standalone branch below is retained for
+-- older catalogue-only integrations; the controls renderer uses this branch.
+local _, ns = ...
+if type(ns) == "table" and ns.Presentation then
+  local P = ns.Presentation
+  local Fonts = {}
+  ns.Fonts = Fonts
+  local unpack = unpack or table.unpack
+  local path = "Interface\\AddOns\\AAzerothAuctionator\\Fonts\\GentiumBook-Regular.ttf"
+  local records = setmetatable({}, {__mode = "k"})
+  local buttons = setmetatable({}, {__mode = "k"})
+  local copies, count = {}, 0
+  local states = {"Normal", "Highlight", "Disabled"}
+  local function Safe(frame) return P.Safe(frame) end
+  local function Current(region, state)
+    if region.GetParent and region:GetParent() ~= state.parent then return false end
+    if region.GetParent then return P.Category(region) == state.category end
+    return P.Category(state.owner) == state.category
+  end
+  local function Same(a, b) return a[1] == b[1] and a[2] == b[2] and a[3] == b[3] end
+  local function Enabled(category) return P.Enabled(category) end
+  local function RestoreRegion(region, state)
+    if not Safe(region) then return false end
+    if not Current(region, state) then records[region] = nil; return true end
+    if Same({region:GetFont()}, state.applied) then region:SetFont(unpack(state.original)) end
+    records[region] = nil
+    return true
+  end
+  function Fonts.ApplyRegion(region, owner, category)
+    if not Safe(region) or not region.GetFont or not region.SetFont then return false end
+    local state = records[region]
+    if not Enabled(category) then
+      if state then RestoreRegion(region, state) end
+      return false
+    end
+    local current = {region:GetFont()}
+    if state and Same(current, state.applied) then
+      if state.owner == owner and (not region.GetParent or region:GetParent() == state.parent) then state.category = category end
+      return false
+    end
+    if current[1] and current[2] and current[1] ~= path then
+      region:SetFont(path, current[2], current[3])
+      local applied = {region:GetFont()}
+      if applied[1] == path then
+        records[region] = {owner = owner, category = category, original = current, applied = applied, parent = region.GetParent and region:GetParent()}
+        return true
+      end
+    end
+    return false
+  end
+  local function Copy(source)
+    if type(source) == "string" then source = _G[source] end
+    if not source or not source.GetFont then return end
+    local face, size, flags = source:GetFont()
+    if not face or not size or face == path then return end
+    local copy = copies[source]
+    if not copy then
+      count = count + 1; copy = CreateFont("AAzerothAuctionatorFont" .. count); copies[source] = copy
+    end
+    copy:CopyFontObject(source)
+    if copy:SetFont(path, size, flags) then return copy end
+  end
+  local function RestoreButton(frame, state)
+    if not Safe(frame) then return false end
+    if P.Category(frame) ~= state.category or (frame.GetParent and frame:GetParent() ~= state.parent) then buttons[frame] = nil; return true end
+    for _, name in ipairs(states) do
+      local record = state[name]
+      if record then
+        local get, set = frame["Get" .. name .. "FontObject"], frame["Set" .. name .. "FontObject"]
+        if get and set and get(frame) == record.applied then set(frame, record.original) end
+      end
+    end
+    buttons[frame] = nil
+    return true
+  end
+  function Fonts.Apply(frame, category)
+    if not Safe(frame) then return end
+    local state = buttons[frame]
+    if not Enabled(category) then
+      if state then RestoreButton(frame, state) end
+    else
+      state = state or {category = category, parent = frame.GetParent and frame:GetParent()}
+      for _, name in ipairs(states) do
+        local get, set = frame["Get" .. name .. "FontObject"], frame["Set" .. name .. "FontObject"]
+        if get and set then
+          local original = get(frame)
+          if not state[name] or original ~= state[name].applied then
+            local copy = Copy(original)
+            if copy then set(frame, copy); state[name] = {original = original, applied = copy} end
+          end
+        end
+      end
+      buttons[frame] = state
+    end
+    if frame.IsObjectType and frame:IsObjectType("EditBox") then Fonts.ApplyRegion(frame, frame, category) end
+    if frame.GetRegions then
+      for _, region in ipairs({frame:GetRegions()}) do
+        if region ~= frame.TranslatorsText and region.IsObjectType and region:IsObjectType("FontString") then
+          Fonts.ApplyRegion(region, frame, category)
+        end
+      end
+    end
+  end
+  function Fonts.RestoreOwner(owner)
+    local complete = true
+    for region, state in pairs(records) do
+      if state.owner == owner and not RestoreRegion(region, state) then complete = false end
+    end
+    if buttons[owner] and not RestoreButton(owner, buttons[owner]) then complete = false end
+    return complete
+  end
+  function Fonts.ForgetOwner(owner)
+    for region, state in pairs(records) do if state.owner == owner then records[region] = nil end end
+    buttons[owner] = nil
+  end
+  function Fonts.RestoreCategory(category)
+    local complete, pending = true, {}
+    for region, state in pairs(records) do
+      if state.category == category and not RestoreRegion(region, state) then complete = false end
+    end
+    for frame, state in pairs(buttons) do
+      if state.category == category and not RestoreButton(frame, state) then complete = false end
+    end
+    return complete
+  end
+  function Fonts.Refresh(category)
+    local complete, pending = true, {}
+    for region, state in pairs(records) do
+      if not category or state.category == category then
+        local current = region.GetParent and P.Category(region) or P.Category(state.owner)
+        if current ~= state.category or not Enabled(state.category) then
+          if not RestoreRegion(region, state) then complete = false; pending[state.category] = true end
+        end
+      end
+    end
+    for frame, state in pairs(buttons) do
+      if not category or state.category == category then
+        if P.Category(frame) ~= state.category or not Enabled(state.category) then
+          if not RestoreButton(frame, state) then complete = false; pending[state.category] = true end
+        end
+      end
+    end
+    return complete, pending
+  end
+  return
+end
+
 -- Czech glyph support for Auctionator-owned frames only. Shared Blizzard font
 -- objects and the auction house's native tabs are never modified. Configuration
 -- tooltips temporarily use the same face and restore their original fonts.

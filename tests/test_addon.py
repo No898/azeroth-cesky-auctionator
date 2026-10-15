@@ -104,6 +104,7 @@ class CatalogueTests(unittest.TestCase):
         with zipfile.ZipFile(path) as archive:
             self.assertEqual(set(archive.namelist()), {
                 f"{catalog.ADDON}/{catalog.ADDON}.toc", f"{catalog.ADDON}/Translations.lua",
+                f"{catalog.ADDON}/Controls.lua", f"{catalog.ADDON}/Presentation.lua",
                 f"{catalog.ADDON}/Fonts.lua", f"{catalog.ADDON}/Fonts/GentiumBook-Regular.ttf",
                 f"{catalog.ADDON}/Fonts/OFL.txt",
                 f"{catalog.ADDON}/Textures/AddonLogo.tga",
@@ -111,7 +112,8 @@ class CatalogueTests(unittest.TestCase):
             })
             toc = archive.read(f"{catalog.ADDON}/{catalog.ADDON}.toc").decode()
             lua_files = [line for line in toc.splitlines() if line and not line.startswith("#")]
-            self.assertEqual(lua_files, ["Translations.lua", "Fonts.lua"])
+            self.assertEqual(lua_files, ["Controls.lua", "Translations.lua", "Presentation.lua", "Fonts.lua"])
+            self.assertIn("## SavedVariablesPerCharacter: AZCA_PREFS", toc)
             icon = toc.split("## IconTexture: ", 1)[1].splitlines()[0].replace("\\", "/")
             icon = icon.removeprefix("Interface/AddOns/")
             self.assertEqual(archive.read(icon), (ROOT / "addon" / icon).read_bytes())
@@ -184,6 +186,17 @@ class RuntimeTests(unittest.TestCase):
         lua = self.runtime()
         first = lua.globals().AUCTIONATOR_LOCALES_OVERRIDE()
         first["BUY"] = "mutated"
+        self.assertEqual(lua.globals().AUCTIONATOR_LOCALES_OVERRIDE()["BUY"], "Koupit")
+
+    def test_generated_catalogue_exposes_namespace_without_aliasing_factory(self):
+        lua = LuaRuntime(unpack_returned_tuples=True)
+        namespace = lua.table()
+        lua.execute(self.translation, "AAzerothAuctionator", namespace)
+        self.assertEqual(dict(namespace.Translations.items()), self.cs)
+        first = lua.globals().AUCTIONATOR_LOCALES_OVERRIDE()
+        first["BUY"] = "mutated"
+        self.assertEqual(namespace.Translations["BUY"], "Koupit")
+        namespace.Translations["BUY"] = "namespace-only"
         self.assertEqual(lua.globals().AUCTIONATOR_LOCALES_OVERRIDE()["BUY"], "Koupit")
 
     def test_czech_wins_on_all_client_locales_before_first_consumer(self):

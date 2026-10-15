@@ -1,6 +1,7 @@
 -- Generated from locales/csCZ.json; edit the catalogue, not this file.
 -- Czech translation maintained by Azeroth česky. Auctionator 340.
 -- Must load before Auctionator; no Dependencies/OptionalDeps: Auctionator.
+local _, ns = ...
 AUCTIONATOR_LOCALES_OVERRIDE = function()
   local L = {}
 
@@ -457,4 +458,8 @@ AUCTIONATOR_LOCALES_OVERRIDE = function()
   L["YOU_COLUMN"] = "Tvoje?"
 
   return L
+end
+
+if type(ns) == "table" then
+  ns.Translations = AUCTIONATOR_LOCALES_OVERRIDE()
 end

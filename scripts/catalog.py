@@ -115,11 +115,14 @@ def render(catalogue, version):
         "-- Generated from locales/csCZ.json; edit the catalogue, not this file.",
         f"-- Czech translation maintained by Azeroth česky. Auctionator {version}.",
         "-- Must load before Auctionator; no Dependencies/OptionalDeps: Auctionator.",
+        "local _, ns = ...",
         "AUCTIONATOR_LOCALES_OVERRIDE = function()", "  local L = {}", "",
     ]
     for key, value in sorted(catalogue.items()):
         lines.append(f"  L[{json.dumps(key)}] = {json.dumps(value, ensure_ascii=False)}")
-    return "\n".join(lines + ["", "  return L", "end", ""])
+    return "\n".join(lines + ["", "  return L", "end", "",
+                             'if type(ns) == "table" then',
+                             "  ns.Translations = AUCTIONATOR_LOCALES_OVERRIDE()", "end", ""])
 
 
 def check():
@@ -131,6 +134,12 @@ def check():
     toc = (target.parent / f"{ADDON}.toc").read_text(encoding="utf-8")
     if re.search(r"^##\s*(?:Dependencies|RequiredDeps|OptionalDeps|LoadOnDemand):", toc, re.M):
         problems.append("Translation must load eagerly, before Auctionator, without TOC dependencies")
+    entries = [line for line in toc.splitlines() if line and not line.startswith("#")]
+    if entries != ["Controls.lua", "Translations.lua", "Presentation.lua", "Fonts.lua"]:
+        problems.append("TOC must load Controls, Translations, Presentation and Fonts in order")
+    if ("## SavedVariablesPerCharacter: AZCA_PREFS\n" not in toc
+            or re.search(r"^##\s*SavedVariables:", toc, re.M)):
+        problems.append("Controls require per-character preferences")
     if not ADDON.casefold() < "Auctionator".casefold():
         problems.append("Addon name must sort before Auctionator")
     version = (ROOT / "VERSION").read_text().strip()
@@ -149,6 +158,8 @@ def package():
     files = {
         f"{ADDON}/{ADDON}.toc": ROOT / "addon" / ADDON / f"{ADDON}.toc",
         f"{ADDON}/Translations.lua": ROOT / "addon" / ADDON / "Translations.lua",
+        f"{ADDON}/Controls.lua": ROOT / "addon" / ADDON / "Controls.lua",
+        f"{ADDON}/Presentation.lua": ROOT / "addon" / ADDON / "Presentation.lua",
         f"{ADDON}/Fonts.lua": ROOT / "addon" / ADDON / "Fonts.lua",
         f"{ADDON}/Fonts/GentiumBook-Regular.ttf": ROOT / "addon" / ADDON / "Fonts/GentiumBook-Regular.ttf",
         f"{ADDON}/Fonts/OFL.txt": ROOT / "addon" / ADDON / "Fonts/OFL.txt",
