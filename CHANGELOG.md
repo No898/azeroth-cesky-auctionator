@@ -1,5 +1,9 @@
 # Změny
 
+## 0.1.2-preview.2 — soukromý kandidát
+
+- Úprava inicializace herních příkazů pro omezení zásahů do sdíleného rozhraní. Hlášení po kliknutí na RestedXP Active Targets dál vyžaduje herní ověření.
+
 ## 0.1.1 — 2026-10-06
 
 - Popis a autor v metadatech addonu jsou bez diakritiky, aby se správně zobrazovaly původním herním fontem v seznamu addonů.

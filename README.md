@@ -2,7 +2,9 @@
 
 Samostatný český překlad [Auctionatoru](https://www.curseforge.com/wow/addons/auctionator), spravovaný projektem [Azeroth česky](https://github.com/No898/azeroth-cesky).
 
-**Soukromý kandidát `0.1.2-preview.1` pro WoW: Forever 1.60.1 a Auctionator 340.** Implementuje nezávislé přepínače překladu UI a nastavení. Katalog obsahuje všech **451 textů referenční verze**; addon přibaluje font s českými znaky. V seznamu addonů se modul jmenuje **Azeroth cesky: Auctionator**, používá původní herní font a stejné logo jako hlavní Azeroth česky. Lokální jednotkové testy a společný controls replay prošly 15. 10. 2026. Dřívější první test ve hře nové přepínače nepotvrzuje; skutečný herní průchod dál čeká.
+**Soukromý kandidát `0.1.2-preview.2` pro WoW: Forever 1.60.1 a Auctionator 340.** Implementuje nezávislé přepínače překladu UI a nastavení. Katalog obsahuje všech **451 textů referenční verze**; addon přibaluje font s českými znaky. V seznamu addonů se modul jmenuje **Azeroth cesky: Auctionator**, používá původní herní font a stejné logo jako hlavní Azeroth česky. Lokální jednotkové testy a společný controls replay prošly 15. 10. 2026. Dřívější první test ve hře nové přepínače nepotvrzuje; skutečný herní průchod dál čeká.
+
+Preview.2 upravuje inicializaci sdílených herních příkazů. Oprava navazuje na preview.1; její nové kontroly a problém po kliknutí na RestedXP Active Targets zatím čekají na ověření. Níže uvedené výsledky z 15. října patří předchozímu kandidátu.
 
 ## Instalace
 
@@ -12,7 +14,7 @@ Samostatný český překlad [Auctionatoru](https://www.curseforge.com/wow/addon
 4. Ve výběru addonů zapni **Auctionator** i **Azeroth cesky: Auctionator** a přihlas se do hry.
 
 Instalační balíček soukromého kandidáta se jmenuje
-`AAzerothAuctionator-0.1.2-preview.1.zip`. Konkrétní finální readback,
+`AAzerothAuctionator-0.1.2-preview.2.zip`. Konkrétní finální readback,
 kontrolní součet a replay zabalených controls patří do
 [záznamu kandidátu](docs/COMPANION_CONTROLS.md). Zdrojové testy samy nedokládají
 obsah finálního ZIPu, jeho instalaci ani veřejnou dostupnost.

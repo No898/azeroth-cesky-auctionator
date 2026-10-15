@@ -41,7 +41,7 @@ class CompanionControlsTests(unittest.TestCase):
                               })}
         cls.cs = json.loads((ROOT / "locales/csCZ.json").read_text())
 
-    def runtime(self, prefs=None, core="new", host=True, locale="enUS"):
+    def runtime(self, prefs=None, core="new", host=True, locale="enUS", observe_globals=False):
         lua = LuaRuntime(unpack_returned_tuples=True)
         lua.execute(MOCKS)
         lua.execute(FIXTURE)
@@ -64,8 +64,29 @@ class CompanionControlsTests(unittest.TestCase):
             lua.globals().AZCA_PREFS = lua.table_from(prefs)
         lua.globals().InstallCore(core)
         namespace = lua.globals().CompanionNamespace
+        if observe_globals:
+            lua.execute('''
+              globalWrites={}
+              nativeSlashRegistry=SlashCmdList
+              nativeSlashHandler=function() end
+              SlashCmdList.NATIVE_SENTINEL=nativeSlashHandler
+              local globals=_G
+              local environment=setmetatable({}, {__index=globals,
+                __newindex=function(_,key,value)
+                  globalWrites[key]=(globalWrites[key] or 0)+1
+                  globals[key]=value
+                end})
+              function LoadObserved(source,namespace)
+                local chunk=assert(loadstring(source))
+                setfenv(chunk,environment)
+                chunk("AAzerothAuctionator",namespace)
+              end
+            ''')
         for name in ("Controls.lua", "Translations.lua", "Presentation.lua", "Fonts.lua"):
-            lua.execute((ADDON / name).read_text(), "AAzerothAuctionator", namespace)
+            if observe_globals:
+                lua.globals().LoadObserved((ADDON / name).read_text(), namespace)
+            else:
+                lua.execute((ADDON / name).read_text(), "AAzerothAuctionator", namespace)
         lua.execute('Event("ADDON_LOADED", "AAzerothAuctionator"); Flush()')
         if host:
             self.load_host(lua)
@@ -115,6 +136,16 @@ class CompanionControlsTests(unittest.TestCase):
 
     def text(self, lua, expression):
         return lua.eval(expression + ":GetText()")
+
+    def test_host_absent_registration_never_assigns_the_shared_slash_registry(self):
+        lua = self.runtime(host=False, observe_globals=True)
+        lua.execute('''
+          assert(Auctionator==nil)
+          assert(globalWrites.SlashCmdList==nil,"companion reassigned the shared global registry")
+          assert(SlashCmdList==nativeSlashRegistry and SlashCmdList.NATIVE_SENTINEL==nativeSlashHandler)
+          assert(type(SlashCmdList.AAZEROTHAUCTIONATOR)=="function")
+          assert(SLASH_AAZEROTHAUCTIONATOR1=="/azca")
+        ''')
 
     def test_default_and_explicit_false_preferences_survive_reload(self):
         cases = (

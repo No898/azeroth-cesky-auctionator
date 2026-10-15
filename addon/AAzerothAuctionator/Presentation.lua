@@ -1000,7 +1000,6 @@ local function Command(input)
   if accepted then CommandStatus()
   else print("Auctionator: " .. (type(reason) == "string" and reason or "unavailable")) end
 end
-SlashCmdList = SlashCmdList or {}
 SLASH_AAZEROTHAUCTIONATOR1 = "/azca"
 SlashCmdList.AAZEROTHAUCTIONATOR = Command
 
