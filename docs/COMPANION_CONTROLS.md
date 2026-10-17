@@ -1,9 +1,10 @@
-# Soukromý kandidát 0.1.2-preview.1 — UI a nastavení
+# Soukromý kandidát 0.1.2-preview.2 — UI a nastavení
 
-Tento záznam popisuje implementované přepínače a offline výsledky z
-**15. 10. 2026**. Přesný ZIP je ověřený; instalace a skutečný průchod WoW
-mají samostatné doklady mimo tento offline protokol. Historické testy a snímky
-dřívějších verzí nejsou důkazem nových přepínačů.
+Tento záznam popisuje implementované přepínače a aktuální offline výsledky z
+**17. 10. 2026**. Výsledky preview.1 z 15. října zůstávají níže jako historie.
+Instalace a skutečný průchod WoW mají samostatné doklady mimo tento offline
+protokol. Historické testy a snímky dřívějších verzí nejsou herním důkazem
+nových přepínačů.
 
 ## Preference a rozsah
 
@@ -38,8 +39,9 @@ originál; nepřevádí český text zpět na odhadnutou angličtinu.
 Podpora se zjišťuje přes `AzerothCeskyAPI.GetCompanionControls(1)`.
 Companion používá identitu `AAzerothAuctionator` a publikuje obě podporované
 kategorie. Hlavní addon drží ovládání, nikoli druhou kopii preferencí.
-Referenční sestava pro nové ovládání je core `0.5.6-gamepad-controls.1`;
-její přítomnost není podmínkou samostatného překladu ani příkazů.
+Aktuální replay používá controls protokol z core připravovaného pro 0.5.8,
+revize `9e705ef4`; jeho přítomnost není podmínkou samostatného překladu
+ani příkazů.
 
 Bez core nebo se starším core bez nové operace preference dál fungují.
 Pozdější registrace zveřejní skutečný uložený a účinný stav. Chybějící
@@ -53,7 +55,31 @@ Při neznámém či smíšeném výsledku se účinná hodnota netvrdí. Přijet
 tedy není potvrzení, že již otevřený český text zmizel. Opakovaný požadavek
 na stejnou hodnotu nezpůsobí další zápis, revizi ani překreslení.
 
-## Offline výsledky a čekající doklady — 15. 10. 2026
+## Aktuální offline výsledky — 17. 10. 2026
+
+Ověřený běhový kód má revizi `62e54ad`. Preview.2 zachovává předchozí
+implementaci přepínačů, opravuje zápis do sdíleného registru příkazů a hlásí
+stejnou verzi v registračním descriptoru jako VERSION a TOC.
+
+| Brána | Výsledek a hranice důkazu |
+| --- | --- |
+| Kontrola závislostí, build, check a package | PASS; 451 klíčů, bez varování. |
+| Plná jednotková sada | PASS; 67 testů, žádný přeskočený. |
+| Cílené regrese | PASS; dvě regrese verze a zachování sdíleného registru příkazů. Nová regrese na původním kódu očekávaně selhala kvůli hlášené preview.1. |
+| Přesný ZIP | PASS; 10 položek, CRC a všechny bajty shodné se zdroji; archivovaný descriptor hlásí `0.1.2-preview.2`. |
+| Skutečný core controls protokol a přesné ZIPy tří companionů | PASS; čtyři kombinace, uložené preference, nezávislost companionů a pravdivé čekající stavy. Host/renderery jsou stuby, nikoli celé upstream UI nebo WoW. |
+| Instalace a skutečný herní průchod | Samostatné brány. Hlášení po kliknutí na RestedXP Active Targets ani průchod myší, gamepadem a bojem tento protokol neuzavírá. |
+| Veřejná publikace | Není součástí soukromého kandidáta. |
+
+[Protokol ze 17. října](verification/2026-10-17-preview2-controls.json)
+zachovává checksum ZIPu před touto následnou dokumentační úpravou.
+Změna README nemění ověřený běhový kód, ale každé přebalení potřebuje nový
+checksum, CRC a readback všech deseti souborů. Samotná úprava dokumentace
+nevyžaduje opakování celé 67testové sady.
+
+## Historické offline výsledky — 15. 10. 2026, preview.1
+
+Následující výsledky a jejich protokol patří původnímu preview.1.
 
 | Brána | Výsledek a hranice důkazu |
 | --- | --- |

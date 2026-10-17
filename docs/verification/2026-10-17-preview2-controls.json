@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "scope": "private-preview2-offline-validation-before-documentation-refresh",
+  "verifiedDate": "2026-10-17",
+  "version": "0.1.2-preview.2",
+  "runtimeSourceRevision": "62e54adac84935e5546e95983a6891b886e66696",
+  "coreRevision": "9e705ef48b814385a162ebfb0d4cb61890180b49",
+  "catalogKeys": 451,
+  "tests": {
+    "passed": 67,
+    "skipped": 0,
+    "durationSeconds": 0.794
+  },
+  "focusedTests": {
+    "passed": 2,
+    "skipped": 0,
+    "durationSeconds": 0.009
+  },
+  "checks": {
+    "dependencyCheck": true,
+    "build": true,
+    "catalogCheck": true,
+    "package": true,
+    "diffCheck": true,
+    "regressionFailsOnOriginalVersionMismatch": true
+  },
+  "warnings": [],
+  "packageBeforeDocumentationUpdate": {
+    "sha256": "ea241b4ffba21c5adcb0396487b54ee874204a1d844461d769ba6f6b75ea25cf",
+    "files": 10,
+    "crcPassed": true,
+    "allBytesMatch": true,
+    "descriptorVersion": "0.1.2-preview.2",
+    "filesSha256": {
+      "AAzerothAuctionator.toc": "17dc6ec71b8c1e4e5cddc1ed8d94c401a93ca50114444a72410c346923e7f099",
+      "Controls.lua": "6e2c34fcfbf2462ca699c728f03ebbd4fb7b635cd3c75cd068570119eb33d21c",
+      "Translations.lua": "50c0a8d567f602c0b33dabb891a7740fe52f0c6a6539f1de673465ffda7870d0",
+      "Presentation.lua": "e169ef0409fdc03649d59387b7a4d3e7028b51a418dcfc66e50759ab41c8a538",
+      "Fonts.lua": "c785238814d1b06136dd9ffd3169d4be866dccfa7a65fcb04b7b63e7d22c5678",
+      "Fonts/GentiumBook-Regular.ttf": "2027f6a864e5a9907c113438969d1d03fa91dfdd1a3885fa0fdeb496f0f682e4",
+      "Fonts/OFL.txt": "dcae5818b104b6cb24334bb4c92f7896d1ac988529ca4654ff21361a7b5b94ee",
+      "Textures/AddonLogo.tga": "3560d56d094cdb2948bdeb3f53aecd140193c34283c28195e8bb43f72dd8d929",
+      "README.md": "b53a67bb784d470e7fd0d23604138f127d767131c81159ff3755a7ac023519c5",
+      "CHANGELOG.md": "6b07ce306824198723e11bf11b253ee7ae26aa33e96dd16dc9320c0fa514109e"
+    },
+    "entries": [
+      "AAzerothAuctionator/AAzerothAuctionator.toc",
+      "AAzerothAuctionator/CHANGELOG.md",
+      "AAzerothAuctionator/Controls.lua",
+      "AAzerothAuctionator/Fonts.lua",
+      "AAzerothAuctionator/Fonts/GentiumBook-Regular.ttf",
+      "AAzerothAuctionator/Fonts/OFL.txt",
+      "AAzerothAuctionator/Presentation.lua",
+      "AAzerothAuctionator/README.md",
+      "AAzerothAuctionator/Textures/AddonLogo.tga",
+      "AAzerothAuctionator/Translations.lua"
+    ],
+    "filename": "AAzerothAuctionator-0.1.2-preview.2.zip"
+  },
+  "coreControlsReplay": {
+    "kind": "actual-core-plus-three-actual-controls-modules",
+    "fourCombinations": true,
+    "noOpNoRevisionRenderOrEvent": true,
+    "positiveEventDeliveryOutsideCallbacks": true,
+    "subscriberPayloadIsolation": true,
+    "detachedState": true,
+    "companionIndependence": true,
+    "hostUnavailable": true,
+    "pendingCombat": true,
+    "noCoreAndLateAttach": true,
+    "oldV1OnlyCore": true,
+    "allFourSavedCombinationsSurviveFreshModuleLoad": true,
+    "noExistingV1EventsOrStateChanges": true,
+    "boundedTimerDrain": true,
+    "rendererHostStub": true,
+    "coreV1Ready": false,
+    "upstreamSurfaceProof": false,
+    "alreadyOpenSurfaceRestorationProof": false,
+    "gameVerified": false
+  },
+  "coreControlsInputHashes": {
+    "Core/SafeRead.lua": "a6843c011e035a0e3ac645c6d81144a2b4c2b6c3c70ddc30a8653916cf39f571",
+    "Core/CompanionControls.lua": "cc7bdeab2114fbfa0403b5835b34b7fc5290ef36f88a38545f578eedabc297af",
+    "Core/CompanionAPI.lua": "3792b70f7f06b7e68e917b28131a5e771624f90a7ee89c34f89c044fee3a2745"
+  },
+  "companionZipHashes": {
+    "questie": "3a81463b0a52819b577f0b3f80c2ce113278df2a5af05c2ddf17362c67fe1220",
+    "auctionator": "ea241b4ffba21c5adcb0396487b54ee874204a1d844461d769ba6f6b75ea25cf",
+    "rxp": "4082825454f0be8b5e416dc7a9a6bd256329131527a85f122b6fe95c611cf620"
+  },
+  "subsequentDocumentationChanges": "README and controls documentation update only; every rebuilt ZIP requires a new checksum, CRC and ten-file source-byte readback. Runtime tests and protocol replay remain tied to the unchanged runtime hashes above.",
+  "gameVerified": false,
+  "installationProofIncluded": false,
+  "published": false,
+  "pendingGameScenarios": [
+    "Reported error after clicking RestedXP Active Targets",
+    "Mouse, gamepad, combat and already-open UI/settings surfaces"
+  ],
+  "historicalPreview1Receipt": "2026-10-15-ui-settings-controls.json"
+}

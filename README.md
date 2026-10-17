@@ -2,9 +2,9 @@
 
 Samostatný český překlad [Auctionatoru](https://www.curseforge.com/wow/addons/auctionator), spravovaný projektem [Azeroth česky](https://github.com/No898/azeroth-cesky).
 
-**Soukromý kandidát `0.1.2-preview.2` pro WoW: Forever 1.60.1 a Auctionator 340.** Implementuje nezávislé přepínače překladu UI a nastavení. Katalog obsahuje všech **451 textů referenční verze**; addon přibaluje font s českými znaky. V seznamu addonů se modul jmenuje **Azeroth cesky: Auctionator**, používá původní herní font a stejné logo jako hlavní Azeroth česky. Lokální jednotkové testy a společný controls replay prošly 15. 10. 2026. Dřívější první test ve hře nové přepínače nepotvrzuje; skutečný herní průchod dál čeká.
+**Soukromý kandidát `0.1.2-preview.2` pro WoW: Forever 1.60.1 a Auctionator 340.** Implementuje nezávislé přepínače překladu UI a nastavení. Katalog obsahuje všech **451 textů referenční verze**; addon přibaluje font s českými znaky. V seznamu addonů se modul jmenuje **Azeroth cesky: Auctionator**, používá původní herní font a stejné logo jako hlavní Azeroth česky.
 
-Preview.2 upravuje inicializaci sdílených herních příkazů. Oprava navazuje na preview.1; její nové kontroly a problém po kliknutí na RestedXP Active Targets zatím čekají na ověření. Níže uvedené výsledky z 15. října patří předchozímu kandidátu.
+Preview.2 upravuje inicializaci sdílených herních příkazů a sjednocuje verzi hlášenou ovládacím API s metadaty. Dne **17. 10. 2026** prošlo **67 lokálních testů bez varování**, readback všech **10 souborů ZIPu** a společný replay skutečného core controls protokolu nad přesnými ZIPy companionů. Hlášení po kliknutí na RestedXP Active Targets i skutečný průchod přepínači ve WoW dál čekají na herní ověření.
 
 ## Instalace
 
@@ -92,7 +92,17 @@ python3 -m venv .venv
 
 `fetch` stáhne konkrétní oficiální vydání Auctionatoru a ověří SHA-256. Testy používají jeho skutečný lokalizační resolver; nepouštějí WoW. Instalační ZIP a jeho kontrolní součet vzniknou v `dist/`. Na Windows použij `.venv\Scripts\python.exe`.
 
-**Offline ověření 15. 10. 2026:** prošla plná sada **65 jednotkových testů**,
+**Aktuální offline ověření 17. 10. 2026 — preview.2:** prošlo **67 testů bez
+přeskočení**, dvě cílené regrese, kontrola závislostí, build, check a package;
+seznam varování je prázdný. Přesný ZIP měl 10 souborů, platné CRC a všechny
+bajty shodné se zdroji; zabalené ovládání registrovalo verzi `0.1.2-preview.2`.
+Společný replay použil skutečný controls protokol core připravovaného pro
+0.5.8 a přesné ZIPy všech tří companionů. Host a renderery zastupují stuby;
+nejde o herní příjemku. [Protokol](docs/verification/2026-10-17-preview2-controls.json)
+zachovává otisk tohoto ZIPu před následnou úpravou dokumentace. Každé nové
+přebalení vyžaduje vlastní checksum a readback.
+
+**Historické offline ověření 15. 10. 2026 — preview.1:** prošla plná sada **65 jednotkových testů**,
 z toho **36 testů nových controls**, nad katalogem 451 klíčů. Prošel také
 společný replay skutečného core controls kontraktu 1 se třemi zdrojovými
 moduly `Controls.lua` companionů. Host a renderery v replayi zastupují testovací
@@ -114,4 +124,4 @@ Auctionator: **plusmouse, Borjamacare a přispěvatelé původního projektu**. 
 
 Přibalený nezměněný **Gentium Book 7.000 Regular**: Copyright (c) 2003–2025 SIL Global. Licence SIL Open Font License 1.1 je v `Fonts/OFL.txt`; původ a kontrolní součty jsou v [dokumentaci](https://github.com/No898/azeroth-cesky-auctionator/blob/main/docs/ARCHITECTURE.md#font).
 
-English: standalone Czech translation for Auctionator, using its supported `AUCTIONATOR_LOCALES_OVERRIDE` callback. Requires Auctionator, but not Azeroth česky. Private candidate 0.1.2-preview.1 implements separate UI and settings preferences for WoW: Forever 1.60.1 and Auctionator 340. All 65 unit tests and a shared source-level core controls replay passed on 15 October 2026. Those checks do not prove the final ZIP, installation or actual in-game behavior.
+English: standalone Czech translation for Auctionator, using its supported `AUCTIONATOR_LOCALES_OVERRIDE` callback. Requires Auctionator, but not Azeroth česky. Private candidate 0.1.2-preview.2 implements separate UI and settings preferences for WoW: Forever 1.60.1 and Auctionator 340. All 67 local tests passed without warnings on 17 October 2026. A 10-file ZIP passed CRC, source-byte readback and registration-version checks; the actual core controls protocol replay passed using exact companion ZIPs and stub hosts/renderers. Subsequent documentation repackaging requires its own checksum and readback. Installation and real WoW validation, including the reported RestedXP Active Targets interaction, remain separate gates.
