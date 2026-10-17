@@ -45,6 +45,7 @@ class CompanionControlsTests(unittest.TestCase):
         lua = LuaRuntime(unpack_returned_tuples=True)
         lua.execute(MOCKS)
         lua.execute(FIXTURE)
+        lua.globals().companionVersion = (ROOT / "VERSION").read_text().strip()
         lua.execute('''
           Auctionator = nil
           CompanionNamespace = {}
@@ -53,7 +54,7 @@ class CompanionControlsTests(unittest.TestCase):
           SlashCmdList = {}
           C_AddOns = {GetAddOnMetadata = function(name, field)
             if name == "Auctionator" and field == "Version" then return "340" end
-            if name == "AAzerothAuctionator" and field == "Version" then return "0.1.2-preview.1" end
+            if name == "AAzerothAuctionator" and field == "Version" then return companionVersion end
           end}
           GetAddOnMetadata = C_AddOns.GetAddOnMetadata
           function IsAddOnLoaded(name) return name == "Auctionator" and Auctionator ~= nil end
@@ -136,6 +137,15 @@ class CompanionControlsTests(unittest.TestCase):
 
     def text(self, lua, expression):
         return lua.eval(expression + ":GetText()")
+
+    def test_registered_companion_version_matches_toc_and_release_version(self):
+        version = (ROOT / "VERSION").read_text().strip()
+        toc = (ADDON / "AAzerothAuctionator.toc").read_text()
+        toc_version = next(line.removeprefix("## Version: ") for line in toc.splitlines()
+                           if line.startswith("## Version: "))
+        self.assertEqual(toc_version, version)
+        lua = self.runtime(host=False)
+        self.assertEqual(lua.globals().coreDescriptor.version, version)
 
     def test_host_absent_registration_never_assigns_the_shared_slash_registry(self):
         lua = self.runtime(host=False, observe_globals=True)
@@ -689,7 +699,7 @@ class CompanionControlsTests(unittest.TestCase):
         self.assertEqual(snapshot.categories.ui.status, "unavailable")
         self.assertEqual(snapshot.categories.settings.status, "unavailable")
         self.assertEqual(lua.eval("coreDescriptor.id"), "AAzerothAuctionator")
-        self.assertEqual(lua.eval("coreDescriptor.version"), "0.1.2-preview.1")
+        self.assertEqual(lua.eval("coreDescriptor.version"), (ROOT / "VERSION").read_text().strip())
         self.assertTrue(lua.eval("coreDescriptor.categories.ui and coreDescriptor.categories.settings"))
         self.load_host(lua)
         self.assertTrue(lua.eval("coreSnapshot.hostReady"))

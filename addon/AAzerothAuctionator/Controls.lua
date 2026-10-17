@@ -1,5 +1,5 @@
 local addonName, ns = ...
-local Controls = {version="0.1.2-preview.1"}
+local Controls = {version="0.1.2-preview.2"}
 ns.Controls = Controls
 
 local fields = {ui="uiEnabled", settings="settingsEnabled"}

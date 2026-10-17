@@ -3,6 +3,7 @@
 ## 0.1.2-preview.2 — soukromý kandidát
 
 - Úprava inicializace herních příkazů pro omezení zásahů do sdíleného rozhraní. Hlášení po kliknutí na RestedXP Active Targets dál vyžaduje herní ověření.
+- Ovládací API hlásí stejnou verzi doplňku jako instalační metadata.
 
 ## 0.1.1 — 2026-10-06
 
