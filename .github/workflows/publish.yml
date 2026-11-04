@@ -84,13 +84,19 @@ jobs:
           fi
           test -n "$CURSEFORGE_API_TOKEN"
           # Herní verze se vybírá podle přesného názvu; nejednoznačná shoda odeslání zastaví.
-          curl -fsS https://wow.curseforge.com/api/game/versions -H "X-Api-Token: ${CURSEFORGE_API_TOKEN}" > "$RUNNER_TEMP/versions.json"
+          code="$(curl -sS https://wow.curseforge.com/api/game/versions -H "X-Api-Token: ${CURSEFORGE_API_TOKEN}" \
+            -H "Accept: application/json" -A "Python-urllib/3.12" -o "$RUNNER_TEMP/versions.json" -w "%{http_code}")"
+          if [ "$code" != 200 ]; then
+            echo "CurseForge game/versions HTTP $code" | tee -a "$GITHUB_STEP_SUMMARY"
+            head -c 1000 "$RUNNER_TEMP/versions.json"; echo
+            exit 22
+          fi
           ids="$(jq -c --arg v "$GAME_VERSION" '[.[] | select(.name == $v) | .id]' "$RUNNER_TEMP/versions.json")"
           test "$(echo "$ids" | jq length)" = 1
           metadata="$(echo "$metadata" | jq -c --argjson ids "$ids" '.gameVersions = $ids')"
           # Bez opakování: přijatý POST by se jinak mohl nahrát dvakrát.
           code="$(curl -sS -X POST "https://wow.curseforge.com/api/projects/${CURSEFORGE_PROJECT_ID}/upload-file" \
-            -H "X-Api-Token: ${CURSEFORGE_API_TOKEN}" -H "Accept: application/json" \
+            -H "X-Api-Token: ${CURSEFORGE_API_TOKEN}" -H "Accept: application/json" -A "Python-urllib/3.12" \
             --form-string "metadata=${metadata}" -F "file=@${ZIP_PATH}" -o "$RUNNER_TEMP/cf-response.txt" -w "%{http_code}")"
           echo "HTTP $code" | tee -a "$GITHUB_STEP_SUMMARY"
           head -c 2000 "$RUNNER_TEMP/cf-response.txt" | tee -a "$GITHUB_STEP_SUMMARY"
