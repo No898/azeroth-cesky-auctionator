@@ -1,0 +1,123 @@
+name: Odeslat na CurseForge a Wago
+run-name: "Vydání ${{ inputs.release_tag }} → ${{ inputs.target }} (dry run: ${{ inputs.dry_run }})"
+# Odešle ZIP z existujícího GitHub vydání přes API. Spouští se jen ručně.
+# Repo proměnné: ADDON_TITLE, ZIP_PREFIX, CURSEFORGE_PROJECT_ID, WAGO_PROJECT_ID, GAME_VERSION.
+# Tajemství: CURSEFORGE_API_TOKEN, WAGO_API_TOKEN.
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Existující GitHub release tag (například v0.1.4)
+        required: true
+        type: string
+      target:
+        description: Kam odeslat
+        type: choice
+        options: [both, curseforge, wago]
+        default: both
+      dry_run:
+        description: Pouze ověřit ZIP a vypsat požadavek, nic se neodešle
+        type: boolean
+        default: true
+permissions: {}
+concurrency:
+  group: publish
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    env:
+      RELEASE_TAG: ${{ inputs.release_tag }}
+      TARGET: ${{ inputs.target }}
+      DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
+      DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+      ADDON_TITLE: ${{ vars.ADDON_TITLE }}
+      ZIP_PREFIX: ${{ vars.ZIP_PREFIX }}
+      GAME_VERSION: ${{ vars.GAME_VERSION || '1.60.1' }}
+    steps:
+      - name: Ověřit tag a výchozí větev
+        run: |
+          [[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          test "$GITHUB_REF" = "refs/heads/$DEFAULT_BRANCH"
+          test -n "$ADDON_TITLE" && test -n "$ZIP_PREFIX"
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Vyžadovat tag začleněný do výchozí větve
+        run: git merge-base --is-ancestor "$RELEASE_TAG^{commit}" "origin/$DEFAULT_BRANCH"
+      - name: Stáhnout ZIP a changelog z vydání a ověřit SHA-256
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          version="${RELEASE_TAG#v}"
+          name="${ZIP_PREFIX}-${version}.zip"
+          gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --json isDraft,isPrerelease,body > "$RUNNER_TEMP/release.json"
+          jq -e '.isDraft == false and .isPrerelease == false and (.body | length) > 0' "$RUNNER_TEMP/release.json" >/dev/null
+          jq -r '.body' "$RUNNER_TEMP/release.json" > "$RUNNER_TEMP/changelog.md"
+          gh release download "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --pattern "$name" --pattern "$name.sha256" --dir "$RUNNER_TEMP/dl"
+          expected="$(cut -d' ' -f1 "$RUNNER_TEMP/dl/$name.sha256")"
+          actual="$(sha256sum "$RUNNER_TEMP/dl/$name" | cut -d' ' -f1)"
+          test "$actual" = "$expected"
+          echo "ZIP $name: $actual ($(stat -c %s "$RUNNER_TEMP/dl/$name") B)" | tee -a "$GITHUB_STEP_SUMMARY"
+          echo "ZIP_PATH=$RUNNER_TEMP/dl/$name" >> "$GITHUB_ENV"
+          echo "VERSION=$version" >> "$GITHUB_ENV"
+      - name: Odeslat na CurseForge
+        if: ${{ inputs.target != 'wago' }}
+        env:
+          CURSEFORGE_API_TOKEN: ${{ secrets.CURSEFORGE_API_TOKEN }}
+          CURSEFORGE_PROJECT_ID: ${{ vars.CURSEFORGE_PROJECT_ID }}
+        run: |
+          set -euo pipefail
+          test -n "$CURSEFORGE_PROJECT_ID"
+          metadata="$(jq -n --arg name "$ADDON_TITLE $VERSION" --rawfile changelog "$RUNNER_TEMP/changelog.md" \
+            '{displayName: $name, changelog: $changelog, changelogType: "markdown", releaseType: "release", gameVersions: []}')"
+          echo "CurseForge $CURSEFORGE_PROJECT_ID: $(echo "$metadata" | jq -c '{displayName, releaseType, changelogBytes: (.changelog | length)}')" | tee -a "$GITHUB_STEP_SUMMARY"
+          if [ "$DRY_RUN" = true ]; then
+            echo "Dry run: na CurseForge se nic neodeslalo." | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          test -n "$CURSEFORGE_API_TOKEN"
+          # Herní verze se vybírá podle přesného názvu; nejednoznačná shoda odeslání zastaví.
+          curl -fsS https://wow.curseforge.com/api/game/versions -H "X-Api-Token: ${CURSEFORGE_API_TOKEN}" > "$RUNNER_TEMP/versions.json"
+          ids="$(jq -c --arg v "$GAME_VERSION" '[.[] | select(.name == $v) | .id]' "$RUNNER_TEMP/versions.json")"
+          test "$(echo "$ids" | jq length)" = 1
+          metadata="$(echo "$metadata" | jq -c --argjson ids "$ids" '.gameVersions = $ids')"
+          # Bez opakování: přijatý POST by se jinak mohl nahrát dvakrát.
+          code="$(curl -sS -X POST "https://wow.curseforge.com/api/projects/${CURSEFORGE_PROJECT_ID}/upload-file" \
+            -H "X-Api-Token: ${CURSEFORGE_API_TOKEN}" -H "Accept: application/json" \
+            --form-string "metadata=${metadata}" -F "file=@${ZIP_PATH}" -o "$RUNNER_TEMP/cf-response.txt" -w "%{http_code}")"
+          echo "HTTP $code" | tee -a "$GITHUB_STEP_SUMMARY"
+          head -c 2000 "$RUNNER_TEMP/cf-response.txt" | tee -a "$GITHUB_STEP_SUMMARY"
+          echo
+          case "$code" in 2??) ;; *) echo "CurseForge odmítl odeslání (HTTP $code)." | tee -a "$GITHUB_STEP_SUMMARY"; exit 22;; esac
+      - name: Odeslat na Wago
+        if: ${{ inputs.target != 'curseforge' }}
+        env:
+          WAGO_API_TOKEN: ${{ secrets.WAGO_API_TOKEN }}
+          WAGO_PROJECT_ID: ${{ vars.WAGO_PROJECT_ID }}
+        run: |
+          set -euo pipefail
+          test -n "$WAGO_PROJECT_ID"
+          curl -fsS https://addons.wago.io/api/data/game | jq -e --arg p "$GAME_VERSION" '.patches.forever | index($p)' >/dev/null
+          metadata="$(jq -n --arg label "$VERSION" --arg patch "$GAME_VERSION" --rawfile changelog "$RUNNER_TEMP/changelog.md" \
+            '{label: $label, stability: "stable", changelog: $changelog, supported_forever_patch: $patch}')"
+          echo "Wago $WAGO_PROJECT_ID: $(echo "$metadata" | jq -c '{label, stability, supported_forever_patch, changelogBytes: (.changelog | length)}')" | tee -a "$GITHUB_STEP_SUMMARY"
+          if [ "$DRY_RUN" = true ]; then
+            echo "Dry run: na Wago se nic neodeslalo." | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          test -n "$WAGO_API_TOKEN"
+          # --form-string posílá metadata doslova: curl -F by středník v changelogu bral jako oddělovač voleb.
+          code="$(curl -sS -X POST "https://addons.wago.io/api/projects/${WAGO_PROJECT_ID}/version" \
+            -H "Authorization: Bearer ${WAGO_API_TOKEN}" -H "Accept: application/json" \
+            -F "file=@${ZIP_PATH}" --form-string "metadata=${metadata}" -o "$RUNNER_TEMP/wago-response.txt" -w "%{http_code}")"
+          echo "HTTP $code" | tee -a "$GITHUB_STEP_SUMMARY"
+          head -c 2000 "$RUNNER_TEMP/wago-response.txt" | tee -a "$GITHUB_STEP_SUMMARY"
+          echo
+          case "$code" in 2??) ;; *) echo "Wago odmítlo odeslání (HTTP $code)." | tee -a "$GITHUB_STEP_SUMMARY"; exit 22;; esac
