@@ -1,9 +1,9 @@
 {
-  "version": "340",
-  "checked_on": "2026-10-05",
-  "release_url": "https://www.curseforge.com/wow/addons/auctionator/files/9037876",
-  "download_url": "https://edge.forgecdn.net/files/9037/876/Auctionator-340.zip",
-  "archive_sha256": "3f92de79486074518a6c3d5ccf3e522064f649685621aeb7847c00cc5fd1ab49",
+  "version": "341",
+  "checked_on": "2026-11-04",
+  "release_url": "https://www.curseforge.com/wow/addons/auctionator/files/9162359",
+  "download_url": "https://mediafilez.forgecdn.net/files/9162/359/Auctionator-341.zip",
+  "archive_sha256": "32c4a2a8d24d46f4fc2725e62c255171a62877854ce6fcbd3272735f6dd3e4e2",
   "source_path": "Auctionator/Locales/enUS.lua",
   "strings": {
     "ADD_FAVOURITE": {

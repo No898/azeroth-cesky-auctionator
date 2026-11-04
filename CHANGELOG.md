@@ -1,5 +1,10 @@
 # Změny
 
+## 0.1.2 — 2026-11-04
+
+- Navázáno na Auctionator 341. Jeho anglický katalog je beze změny, všech 451 textů zůstává přeložených; nové otisky a archiv jsou připnuté v `locales/upstream.json`.
+- Cílový klient zůstává WoW: Forever 1.60.1 (aktuální build 1.60.1.70755). Herní kontrola s Auctionatorem 341 zatím neproběhla.
+
 ## 0.1.1 — 2026-10-06
 
 - Popis a autor v metadatech addonu jsou bez diakritiky, aby se správně zobrazovaly původním herním fontem v seznamu addonů.

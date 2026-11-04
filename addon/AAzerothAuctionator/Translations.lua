@@ -1,5 +1,5 @@
 -- Generated from locales/csCZ.json; edit the catalogue, not this file.
--- Czech translation maintained by Azeroth česky. Auctionator 340.
+-- Czech translation maintained by Azeroth česky. Auctionator 341.
 -- Must load before Auctionator; no Dependencies/OptionalDeps: Auctionator.
 AUCTIONATOR_LOCALES_OVERRIDE = function()
   local L = {}
