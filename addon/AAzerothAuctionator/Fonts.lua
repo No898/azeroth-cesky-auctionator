@@ -206,6 +206,13 @@ local function Install()
   if Auctionator.Config and Auctionator.Config.InternalInitializeFrames then
     hooksecurefunc(Auctionator.Config, "InternalInitializeFrames", RequestDiscovery)
   end
+  -- The crafting/enchant panels live in native profession windows that load
+  -- later; their creation is the only moment the panel can be discovered.
+  for _, module in ipairs({"CraftingInfo", "EnchantInfo"}) do
+    if Auctionator[module] and Auctionator[module].Initialize then
+      hooksecurefunc(Auctionator[module], "Initialize", RequestDiscovery)
+    end
+  end
   for _, method in ipairs({"ShowEditBox", "ShowConfirm", "ShowConfirmAlt", "ShowMoney"}) do
     if Auctionator.Dialogs and Auctionator.Dialogs[method] then
       hooksecurefunc(Auctionator.Dialogs, method, RequestDiscovery)

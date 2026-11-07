@@ -150,6 +150,7 @@ def package():
         f"{ADDON}/{ADDON}.toc": ROOT / "addon" / ADDON / f"{ADDON}.toc",
         f"{ADDON}/Translations.lua": ROOT / "addon" / ADDON / "Translations.lua",
         f"{ADDON}/Fonts.lua": ROOT / "addon" / ADDON / "Fonts.lua",
+        f"{ADDON}/CraftingInfo.lua": ROOT / "addon" / ADDON / "CraftingInfo.lua",
         f"{ADDON}/Fonts/GentiumBook-Regular.ttf": ROOT / "addon" / ADDON / "Fonts/GentiumBook-Regular.ttf",
         f"{ADDON}/Fonts/OFL.txt": ROOT / "addon" / ADDON / "Fonts/OFL.txt",
         f"{ADDON}/Textures/AddonLogo.tga": ROOT / "addon" / ADDON / "Textures/AddonLogo.tga",

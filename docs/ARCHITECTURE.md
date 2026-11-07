@@ -12,7 +12,7 @@ Auctionator.toc
   → převede \\n a exportuje AUCTIONATOR_L_* pro svoje UI
 ```
 
-Factory při každém zavolání vrací novou tabulku. Překladový soubor zapisuje pouze zveřejněný callback. Od `alpha.3` samostatný `Fonts.lua` doplňuje font s českými znaky do vlastních oken Auctionatoru; chybějící glyfy v klientském fontu samotný katalog nevyřeší. Modul nemá uložené proměnné, síť ani závislost na hlavním Azeroth česky. Bez Auctionatoru fontová část neprovádí žádné změny.
+Factory při každém zavolání vrací novou tabulku. Překladový soubor zapisuje pouze zveřejněný callback. Od `alpha.3` samostatný `Fonts.lua` doplňuje font s českými znaky do vlastních oken Auctionatoru; chybějící glyfy v klientském fontu samotný katalog nevyřeší. Modul nemá uložené proměnné, síť ani závislost na hlavním Azeroth česky; volitelně čte jen vlajku okna profese (viz níže). Bez Auctionatoru fontová část neprovádí žádné změny.
 
 ## Font
 
@@ -30,6 +30,12 @@ Samostatná výjimka obsluhuje sdílený `GameTooltip` pouze pro sledovaný prve
 Po načtení Auctionatoru a otevření aukce proběhne jednorázové vyhledání jeho oken. `OnShow`, vlastní továrny nastavení/dialogů a události výsledkových tabulek zachytí dodatečně vytvořené texty i řádky při posouvání. Sleduje se jak `ScrollArea.ScrollBox` tabulek, tak přímý `ScrollBox` nákupních seznamů a nedávných hledání. Obnovy se slučují do následujícího snímku; neběží žádná periodická kontrola ani globální hook vytváření rámců. Callbacky posouvání používají samostatného vlastníka, aby nenahradily registrace Auctionatoru. Post-hooky nemění návratové hodnoty ani aukční funkce. Při vypnutí modulu a novém načtení rozhraní se původní fonty obnoví vytvořením původního UI.
 
 Lua testy kontrolují rozsah zásahů, stavy tlačítek, pozdní vytvoření a posouvání řádků, odložení za boje a opakované otevření. Se skutečným tooltip mixinem z ověřeného archivu Auctionatoru kontrolují také dočasné změny nápověd a jejich obnovu. Kontrola skutečné cmap tabulky fontu ověřuje české glyfy. Herní rasterizaci a spolupráci s ostatními addony musejí ověřit herní testy.
+
+### Panel výroby v okně profese
+
+Auctionator vkládá do nativních oken profese (`TradeSkillFrame`, `CraftFrame`) vlastní panel `AuctionatorCraftingInfo` / `AuctionatorEnchantInfoFrame` s náklady a ziskem. Panel vzniká až s oknem profese, proto `Fonts.lua` spouští vyhledání rámců po `Auctionator.CraftingInfo.Initialize` a `Auctionator.EnchantInfo.Initialize`.
+
+Od 0.1.3 `CraftingInfo.lua` napojuje panel na vlajku hlavního Azeroth česky. Pokud `AzerothCeskyAPI.GetInterface(1)` nabízí `IsWindowOriginal` a ta pro panel vrátí `true` (šedá vlajka nebo vypnutý překlad), post-hook `UpdateTotal` panel znovu vykreslí anglicky. Pro jedno synchronní volání `GetInfoText` přepne pět klíčů `AUCTIONATOR_L_*` na hodnoty z `AUCTIONATOR_LOCALES.enUS()` a hned vrátí české. Tlačítko hledání dostane `SEARCH` z enUS. Odběr `Subscribe` překreslí viditelný panel při důvodech `windows`, `preferences` a `ready`. Bez hlavního addonu, se starším jádrem nebo při cizím `AUCTIONATOR_LOCALES_OVERRIDE` se nic nemění. Jiné části Auctionatoru vlajku nesledují; nejsou v nativním okně s vlajkou.
 
 ### Vlastní položka v seznamu addonů
 
