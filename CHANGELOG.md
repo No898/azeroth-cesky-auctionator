@@ -1,5 +1,11 @@
 # Změny
 
+## 0.1.3 — 2026-11-07
+
+- Panel nákladů a zisku v okně profese (K výrobě, Zisk) má font s českými znaky; dřív místo „ě“ ukazoval čtvereček.
+- Panel respektuje vlajku Azeroth česky v okně profese: šedá vlajka nebo vypnutý překlad zobrazí původní anglické texty Auctionatoru. Bez hlavního addonu, nebo se starší verzí bez potřebného rozhraní, zůstává panel česky jako dosud.
+- Herní kontrola zatím neproběhla.
+
 ## 0.1.2 — 2026-11-04
 
 - Navázáno na Auctionator 341. Jeho anglický katalog je beze změny, všech 451 textů zůstává přeložených; nové otisky a archiv jsou připnuté v `locales/upstream.json`.

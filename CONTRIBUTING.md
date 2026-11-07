@@ -35,7 +35,7 @@ V repozitáři jsou otisky každé anglické hodnoty, formátovací značky a od
 
 ## Distribuce
 
-Balíček vytvoří `python3 scripts/catalog.py package`. Obsahuje pouze složku `AAzerothAuctionator` a osm povolených souborů: TOC, katalog Lua, fontový modul Lua, font TTF s licencí OFL, logo TGA, README a changelog. Publikuj připravený ZIP, ne zdrojový archiv GitHubu. Alpha verze označ jako předběžné vydání a uveď neověřené kontroly.
+Balíček vytvoří `python3 scripts/catalog.py package`. Obsahuje pouze složku `AAzerothAuctionator` a devět povolených souborů: TOC, katalog Lua, fontový modul Lua, modul panelu výroby Lua, font TTF s licencí OFL, logo TGA, README a changelog. Publikuj připravený ZIP, ne zdrojový archiv GitHubu. Alpha verze označ jako předběžné vydání a uveď neověřené kontroly.
 
 Projekt na CurseForge je [Azeroth česky: Auctionator](https://www.curseforge.com/wow/addons/azeroth-cesky-auctionator), ID `1728555`. Ve výchozích vztazích má Auctionator (`6124`) jako Required Dependency. Publikuj ověřený ZIP a označ pouze skutečně podporovanou variantu klienta. **Nepřidávej `Dependencies: Auctionator` ani `OptionalDeps: Auctionator` do našeho TOC:** tyto direktivy by vynutily opačné pořadí načtení. Automatické nahrávání na CurseForge zatím není nakonfigurované.
 

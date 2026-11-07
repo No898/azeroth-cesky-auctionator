@@ -2,7 +2,7 @@
 
 Samostatný český překlad [Auctionatoru](https://www.curseforge.com/wow/addons/auctionator), spravovaný projektem [Azeroth česky](https://github.com/No898/azeroth-cesky).
 
-**Verze `0.1.2` pro WoW: Forever 1.60.1 a Auctionator 341.** Přeloženo je všech **451 textů jeho lokalizačního katalogu**. Vydání obsahuje font s českými znaky a kratší popisky podle prvního testu ve hře. V seznamu addonů se modul jmenuje **Azeroth cesky: Auctionator**, používá původní herní font a stejné logo jako hlavní Azeroth česky. Kontroly katalogu a izolované testy v Lua 5.1 jsou součástí projektu; úplná herní kontrola posledních oprav fontů a rozložení ještě čeká.
+**Verze `0.1.3` pro WoW: Forever 1.60.1 a Auctionator 341.** Přeloženo je všech **451 textů jeho lokalizačního katalogu**. Vydání obsahuje font s českými znaky a kratší popisky podle prvního testu ve hře. V seznamu addonů se modul jmenuje **Azeroth cesky: Auctionator**, používá původní herní font a stejné logo jako hlavní Azeroth česky. Kontroly katalogu a izolované testy v Lua 5.1 jsou součástí projektu; úplná herní kontrola posledních oprav fontů a rozložení ještě čeká.
 
 ## Instalace
 
@@ -20,6 +20,7 @@ Interface/AddOns/
     ├── AAzerothAuctionator.toc
     ├── Translations.lua
     ├── Fonts.lua
+    ├── CraftingInfo.lua
     ├── Fonts/
     │   ├── GentiumBook-Regular.ttf
     │   └── OFL.txt
@@ -27,7 +28,7 @@ Interface/AddOns/
         └── AddonLogo.tga
 ```
 
-Čeština se použije automaticky. Hlavní addon **Azeroth česky není potřeba**. Pro návrat k jazyku herního klienta vypni pouze **Azeroth cesky: Auctionator** a znovu načti rozhraní. Ostatní překladové moduly Auctionatoru nech vypnuté; sdílejí jeden přepis jazyka.
+Čeština se použije automaticky. Hlavní addon **Azeroth česky není potřeba**. Pokud ho máš, panel nákladů a zisku v okně profese se řídí jeho vlajkou: šedá vlajka znamená anglické texty Auctionatoru. Pro návrat k jazyku herního klienta vypni pouze **Azeroth cesky: Auctionator** a znovu načti rozhraní. Ostatní překladové moduly Auctionatoru nech vypnuté; sdílejí jeden přepis jazyka.
 
 Při aktualizaci nahraď celou složku a úplně restartuj klienta, aby se načetla nová metadata a nezůstaly staré soubory. Rozhraní Auctionatoru používá přibalený Gentium Book se zachováním velikosti písma a barev. Seznam addonů a sdílené herní fonty se nemění; název bez diakritiky je čitelný i před přihlášením.
 
@@ -73,4 +74,4 @@ Auctionator: **plusmouse, Borjamacare a přispěvatelé původního projektu**. 
 
 Přibalený nezměněný **Gentium Book 7.000 Regular**: Copyright (c) 2003–2025 SIL Global. Licence SIL Open Font License 1.1 je v `Fonts/OFL.txt`; původ a kontrolní součty jsou v [dokumentaci](https://github.com/No898/azeroth-cesky-auctionator/blob/main/docs/ARCHITECTURE.md#font).
 
-English: standalone Czech translation for Auctionator, using its supported `AUCTIONATOR_LOCALES_OVERRIDE` callback. Requires Auctionator, but not Azeroth česky. Version 0.1.2 targets WoW: Forever 1.60.1 and Auctionator 341. Full in-game verification of the latest font and layout fixes is pending.
+English: standalone Czech translation for Auctionator, using its supported `AUCTIONATOR_LOCALES_OVERRIDE` callback. Requires Auctionator, but not Azeroth česky. Version 0.1.3 targets WoW: Forever 1.60.1 and Auctionator 341. Full in-game verification of the latest font and layout fixes is pending.
