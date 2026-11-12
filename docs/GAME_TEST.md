@@ -33,7 +33,7 @@ Název bez diakritiky nevyžaduje zásah do fontu seznamu.
 
 ## Instalace a načtení
 
-- [ ] Nainstaluj instalační ZIP do klienta Forever 1.60.1, vedle Auctionatoru 341.
+- [ ] Nainstaluj instalační ZIP do klienta Forever 1.60.1, vedle Auctionatoru 345.
 - [ ] Ponech původní složku `AAzerothAuctionator`, vypni ostatní jazykové moduly Auctionatoru.
 - [ ] Nejprve spusť pouze Auctionator a český modul, bez hlavního Azeroth česky. Proveď úplný restart klienta.
 - [ ] V seznamu addonů je „Azeroth cesky: Auctionator“, bez chybné verze nebo chybějící závislosti.

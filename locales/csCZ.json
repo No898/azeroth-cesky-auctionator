@@ -70,10 +70,11 @@
   "CONFIG_QUANTITIES_TEXT": "Zvol výchozí množství pro jednotlivé kategorie předmětů.",
   "CONFIG_SELLING_ALL_ITEMS_CATEGORY": "Prodej: všechny předměty",
   "AUTHOR_HEADER": "Autor",
+  "PAST_AUTHOR_HEADER": "Dřívější autor",
   "TRANSLATORS_HEADER": "Překladatelé",
   "VERSION_HEADER": "Verze",
   "OPEN_ADDON_OPTIONS": "Nastavení",
-  "ENGAGE_HEADER": "Komunita Auctionatoru",
+  "SUPPORT_HEADER": "Získat podporu",
   "DISCORD": "Discord",
   "DISCORD_TOOLTIP_HEADER": "Přidej se k nám na Discordu!",
   "DISCORD_TOOLTIP_TEXT": "Aktivní komunita uživatelů Auctionatoru ti může pomoci s případnými dotazy.",
@@ -446,8 +447,8 @@
   "POSTING_SETTINGS_COLON": "Nastavení vystavení:",
   "ADD_TO_X": "Přidat do %s",
   "REMOVE_FROM_X": "Odebrat z %s",
-  "CONTRIBUTE_HEADER": "|cff04cca4Vývoj zabere spoustu času. Zvaž jeho podporu.|r",
+  "CONTRIBUTE_HEADER": "|cff04cca4Vývoj dělá pracovitý člověk (bez AI)|r",
   "CONTRIBUTE_TOOLTIP_HEADER": "O finanční podpoře",
-  "CONTRIBUTE_TOOLTIP_TEXT": "Jen za posledních několik let stál vývoj a podpora Auctionatoru tisíce hodin práce. Dobrovolným příspěvkem můžeš podpořit jeho další rozvoj.",
+  "CONTRIBUTE_TOOLTIP_TEXT": "Vývoj a podpora Auctionatoru stály desítky tisíc hodin práce, než se dostal do současné podoby. Dobrovolný příspěvek je jeden ze způsobů, jak ho trvale podpořit.",
   "DONATE": "Přispět"
 }

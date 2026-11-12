@@ -49,8 +49,8 @@ Jeden globální callback znamená jeden aktivní překladový modul. Při více
 
 ## Referenční upstream
 
-- [Auctionator 341](https://www.curseforge.com/wow/addons/auctionator/files/9162359), oficiální archiv a SHA-256 v `locales/upstream.json`.
-- `Locales/enUS.lua`: 451 unikátních klíčů; opakované přiřazení např. `PRICE` přebírá poslední hodnotu, stejně jako Lua.
+- [Auctionator 345](https://www.curseforge.com/wow/addons/auctionator/files/9548985), oficiální archiv a SHA-256 v `locales/upstream.json`.
+- `Locales/enUS.lua`: 452 unikátních klíčů; opakované přiřazení např. `PRICE` přebírá poslední hodnotu, stejně jako Lua.
 - `Source/Locales/Main.lua`: callback, anglický fallback při `nil`, newline normalizace, export globálů a `Auctionator.Locales.Apply`.
 - `Source/Utilities/PrettyDate.lua`: pevné pořadí měsíc–den pro nekorejské klienty; samotné překlady jej nemění.
 - [Existující turecký modul](https://github.com/Auctionator/AAuctionatorTurkish) používá stejné rozhraní.

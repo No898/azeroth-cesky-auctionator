@@ -1,9 +1,9 @@
 {
-  "version": "341",
-  "checked_on": "2026-11-04",
-  "release_url": "https://www.curseforge.com/wow/addons/auctionator/files/9162359",
-  "download_url": "https://mediafilez.forgecdn.net/files/9162/359/Auctionator-341.zip",
-  "archive_sha256": "32c4a2a8d24d46f4fc2725e62c255171a62877854ce6fcbd3272735f6dd3e4e2",
+  "version": "345",
+  "checked_on": "2026-11-12",
+  "release_url": "https://www.curseforge.com/wow/addons/auctionator/files/9548985",
+  "download_url": "https://mediafilez.forgecdn.net/files/9548/985/Auctionator-345.zip",
+  "archive_sha256": "a5968a77333cdf99863d6f051aabb3a0cbb7a4a1dd33f956a0fff42a549461df",
   "source_path": "Auctionator/Locales/enUS.lua",
   "strings": {
     "ADD_FAVOURITE": {
@@ -1411,7 +1411,7 @@
       "percents": 0
     },
     "CONTRIBUTE_HEADER": {
-      "sha256": "16a28ee2e8cfd70e5468a6799384b2f3de8270478fe69690a93a113260d41817",
+      "sha256": "759e8496374050fd23ee3777e52ec8d02aaaaf37b11cfc127b5559c495f3e490",
       "format": [],
       "markup": [
         "|cff04cca4",
@@ -1428,7 +1428,7 @@
       "percents": 0
     },
     "CONTRIBUTE_TOOLTIP_TEXT": {
-      "sha256": "787256ec91893a7b7bfd8a4ab084b8cbd17aed2e884d5d938202f9bb9136db68",
+      "sha256": "0c1802080cb7e3c7f250b46ee705dae5205094c59ecaef2f47d15886b860702a",
       "format": [],
       "markup": [],
       "newlines": 0,
@@ -1686,13 +1686,6 @@
     },
     "EDIT_ITEM": {
       "sha256": "7798ea4f8a9a3c8c83e1a423bd659a0d6839d72dcb245e3c4b405d52473a9e11",
-      "format": [],
-      "markup": [],
-      "newlines": 0,
-      "percents": 0
-    },
-    "ENGAGE_HEADER": {
-      "sha256": "0e1980a53be883ee5b2cffc6e5692ddce0174f1e20c652eeab7d8f35730f9bec",
       "format": [],
       "markup": [],
       "newlines": 0,
@@ -2256,6 +2249,13 @@
     },
     "OWNED_COLUMN": {
       "sha256": "2abfdf7917823d513762cbb5c5c90be71c7c5be542db7a19d09c41422df1a193",
+      "format": [],
+      "markup": [],
+      "newlines": 0,
+      "percents": 0
+    },
+    "PAST_AUTHOR_HEADER": {
+      "sha256": "5bffd585c45648ec6096210785a7210453769e929325a7d1b459360efa153c6d",
       "format": [],
       "markup": [],
       "newlines": 0,
@@ -2850,6 +2850,13 @@
     },
     "STOP_LOADING_NOW": {
       "sha256": "0ef749d431fea06e5be17e2e13af74dd9c1fef53fd8b269d238ee2f6c406e866",
+      "format": [],
+      "markup": [],
+      "newlines": 0,
+      "percents": 0
+    },
+    "SUPPORT_HEADER": {
+      "sha256": "eb39d7ae9ff57202f7005f157b72df6acfc7b49727ae919cddfa4b6d70bd4881",
       "format": [],
       "markup": [],
       "newlines": 0,

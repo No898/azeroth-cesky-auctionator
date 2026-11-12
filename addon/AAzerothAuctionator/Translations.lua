@@ -1,5 +1,5 @@
 -- Generated from locales/csCZ.json; edit the catalogue, not this file.
--- Czech translation maintained by Azeroth česky. Auctionator 341.
+-- Czech translation maintained by Azeroth česky. Auctionator 345.
 -- Must load before Auctionator; no Dependencies/OptionalDeps: Auctionator.
 AUCTIONATOR_LOCALES_OVERRIDE = function()
   local L = {}
@@ -201,9 +201,9 @@ AUCTIONATOR_LOCALES_OVERRIDE = function()
   L["CONFIRM_UNHIDE_ALL"] = "Opravdu chceš znovu zobrazit všechny skryté předměty?"
   L["CONFIRM_X_TOTAL_PRICE_X"] = "Potvrdit %s, celková cena %s"
   L["CONTINUE"] = "Pokračovat"
-  L["CONTRIBUTE_HEADER"] = "|cff04cca4Vývoj zabere spoustu času. Zvaž jeho podporu.|r"
+  L["CONTRIBUTE_HEADER"] = "|cff04cca4Vývoj dělá pracovitý člověk (bez AI)|r"
   L["CONTRIBUTE_TOOLTIP_HEADER"] = "O finanční podpoře"
-  L["CONTRIBUTE_TOOLTIP_TEXT"] = "Jen za posledních několik let stál vývoj a podpora Auctionatoru tisíce hodin práce. Dobrovolným příspěvkem můžeš podpořit jeho další rozvoj."
+  L["CONTRIBUTE_TOOLTIP_TEXT"] = "Vývoj a podpora Auctionatoru stály desítky tisíc hodin práce, než se dostal do současné podoby. Dobrovolný příspěvek je jeden ze způsobů, jak ho trvale podpořit."
   L["COPY_ITEM_ADDED"] = "Položka %s zkopírována do seznamu %s"
   L["COPY_NO_LIST_SELECTED"] = "Položku nelze zkopírovat. Není vybrán nákupní seznam."
   L["COPY_TEXT_HEADER"] = "Zkopírovat text"
@@ -240,7 +240,6 @@ AUCTIONATOR_LOCALES_OVERRIDE = function()
   L["DONATE"] = "Přispět"
   L["DURATION"] = "Délka aukce"
   L["EDIT_ITEM"] = "Upravit položku"
-  L["ENGAGE_HEADER"] = "Komunita Auctionatoru"
   L["ENTER_QUANTITY_TO_CONFIRM_PURCHASE"] = "Pro potvrzení nákupu zadej množství %s:"
   L["ERROR_REOPEN_AUCTION_HOUSE"] = "Akci nelze dokončit. Zavři aukční síň a znovu ji otevři."
   L["EXACT_SEARCH"] = "Přesné hledání"
@@ -318,6 +317,7 @@ AUCTIONATOR_LOCALES_OVERRIDE = function()
   L["OPEN_ADDON_OPTIONS"] = "Nastavení"
   L["OPEN_IN_SHOPPING_TAB"] = "Otevřít v záložce Nákup"
   L["OWNED_COLUMN"] = "Vlastní?"
+  L["PAST_AUTHOR_HEADER"] = "Dřívější autor"
   L["PAYING_X"] = "Platíš %s za jeden kus"
   L["PERCENTAGE"] = "Procenta"
   L["PERCENTAGE_SUFFIX"] = "% podbízení"
@@ -400,6 +400,7 @@ AUCTIONATOR_LOCALES_OVERRIDE = function()
   L["STARTING_PRICE_PERCENTAGE_TOOLTIP_TEXT"] = "Procento z ceny balíku použité jako výchozí příhoz při vystavení aukce. Například hodnota 95 nastaví u balíku za 10 stříbrných vyvolávací cenu na 9 stříbrných a 50 měděných."
   L["STOP"] = "Zastavit"
   L["STOP_LOADING_NOW"] = "Zastavit načítání"
+  L["SUPPORT_HEADER"] = "Získat podporu"
   L["TEMPORARY_LOWER_CASE"] = "dočasný"
   L["TIER"] = "Stupeň"
   L["TIME_LEFT"] = "Zbývá"
