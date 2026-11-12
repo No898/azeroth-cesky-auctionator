@@ -1,5 +1,10 @@
 # Změny
 
+## 0.1.4 — 2026-11-12
+
+- Navázáno na Auctionator 345. Nové texty v okně Informace (Dřívější autor, Získat podporu) jsou přeložené a změněné texty o vývoji a podpoře odpovídají novému anglickému znění. Celkem 452 přeložených textů.
+- Cílový klient zůstává WoW: Forever 1.60.1 (aktuální build 1.60.1.70888, Interface 16001 beze změny). Herní kontrola s Auctionatorem 345 zatím neproběhla.
+
 ## 0.1.3 — 2026-11-07
 
 - Panel nákladů a zisku v okně profese (K výrobě, Zisk) má font s českými znaky; dřív místo „ě“ ukazoval čtvereček.
